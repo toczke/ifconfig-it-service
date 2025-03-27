@@ -1,54 +1,120 @@
-# React + TypeScript + Vite
+# IT Service Management System
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A monorepo containing a Discord bot and React frontend for managing IT service requests.
 
-Currently, two official plugins are available:
+## Project Structure
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+```
+it-service-monorepo/
+├── packages/
+│   ├── frontend/     # React frontend application
+│   └── bot/          # Discord bot service
+├── docker-compose.yml
+├── package.json
+└── .env.example
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## Prerequisites
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+- Node.js 20.x or higher
+- Docker and Docker Compose
+- Discord Bot Token
+- Discord Server with configured channels
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
+## Setup
+
+1. Clone the repository:
+```bash
+git clone https://github.com/yourusername/it-service-monorepo.git
+cd it-service-monorepo
 ```
+
+2. Copy the environment variables file:
+```bash
+cp .env.example .env
+```
+
+3. Configure your environment variables in `.env`:
+```env
+# Discord Bot Configuration
+DISCORD_TOKEN=your_discord_bot_token
+CHANNELS_NEW_REQUESTS=your_new_requests_channel_id
+CHANNELS_IN_PROGRESS=your_in_progress_channel_id
+CHANNELS_DONE=your_done_channel_id
+CHANNELS_REJECTED=your_rejected_channel_id
+FRONTEND_URL=http://localhost:4173
+
+# Frontend Configuration
+VITE_BOT_API_URL=http://localhost:3001
+```
+
+## Development
+
+### Using Docker (Recommended)
+
+1. Start all services:
+```bash
+npm run dev
+```
+
+2. Stop all services:
+```bash
+npm run stop
+```
+
+### Local Development
+
+1. Install dependencies:
+```bash
+npm install
+```
+
+2. Start frontend development server:
+```bash
+npm run frontend:dev
+```
+
+3. Start bot development server:
+```bash
+npm run bot:dev
+```
+
+## Features
+
+### Discord Bot
+- Handles IT service requests through Discord
+- Manages request status (New, In Progress, Done, Rejected)
+- Supports file attachments
+- Creates threads for ongoing support
+- Adds service notes to requests
+
+### Frontend
+- Modern React application with TypeScript
+- Contact form for service requests
+- File upload support
+- Real-time status updates
+- Responsive design
+
+## Contributing
+
+1. Create a new branch for your feature:
+```bash
+git checkout -b feature/your-feature-name
+```
+
+2. Make your changes and commit them:
+```bash
+git add .
+git commit -m "feat: your feature description"
+```
+
+3. Push to your branch:
+```bash
+git push origin feature/your-feature-name
+```
+
+4. Create a Pull Request
+
+## License
+
+This project is licensed under the MIT License - see the LICENSE file for details. 

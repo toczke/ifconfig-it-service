@@ -16,7 +16,7 @@ import {
   Group,
   Button
 } from '@mantine/core';
-import classes from './CustomPc.module.css';
+import classes from './CustomPC.module.css';
 
 const services = [
   {
