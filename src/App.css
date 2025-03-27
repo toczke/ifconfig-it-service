@@ -2,12 +2,14 @@
 :root {
   --max-content-width: 2000px;
   --content-padding: 1rem;
+  --mobile-content-padding: 0.75rem;
 }
 
 * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+  -webkit-tap-highlight-color: transparent; /* Remove tap highlight on mobile */
 }
 
 html, body, #root {
@@ -16,6 +18,7 @@ html, body, #root {
   margin: 0;
   padding: 0;
   overflow-x: hidden;
+  font-size: 16px; /* Base font size for better mobile readability */
 }
 
 /* Layout Styles */
@@ -48,12 +51,45 @@ html, body, #root {
 /* Responsive Adjustments */
 @media (max-width: 768px) {
   :root {
-    --content-padding: 0.75rem;
+    --content-padding: var(--mobile-content-padding);
   }
   
   .logo {
     height: 4em;
     padding: 1em;
+  }
+
+  /* Improve touch targets */
+  button, 
+  a, 
+  input, 
+  select, 
+  textarea {
+    min-height: 44px; /* Minimum touch target size */
+    min-width: 44px;
+  }
+
+  /* Adjust font sizes for better readability */
+  body {
+    font-size: 15px;
+    line-height: 1.5;
+  }
+
+  /* Prevent text size adjustment on orientation change */
+  html {
+    -webkit-text-size-adjust: 100%;
+  }
+}
+
+/* Small mobile devices */
+@media (max-width: 480px) {
+  :root {
+    --content-padding: 0.5rem;
+  }
+
+  .logo {
+    height: 3em;
+    padding: 0.75em;
   }
 }
 
@@ -68,4 +104,13 @@ html, body, #root {
 :focus-visible {
   outline: 2px solid #3b82f6;
   outline-offset: 2px;
+}
+
+/* Prevent horizontal scrolling on mobile */
+@media (max-width: 768px) {
+  body {
+    position: relative;
+    width: 100%;
+    overflow-x: hidden;
+  }
 }

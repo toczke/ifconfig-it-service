@@ -6,6 +6,11 @@
     font-weight: 800;
     font-size: rem(36px);
     margin-bottom: var(--mantine-spacing-md);
+    color: var(--mantine-color-text);
+    
+    @media (max-width: $mantine-breakpoint-md) {
+      font-size: rem(28px);
+    }
     
     @media (max-width: $mantine-breakpoint-sm) {
       font-size: rem(24px);
@@ -15,6 +20,7 @@
   .description {
     max-width: rem(600px);
     margin: auto;
+    color: var(--mantine-color-dimmed);
     
     @media (max-width: $mantine-breakpoint-sm) {
       font-size: var(--mantine-font-size-sm);
@@ -32,6 +38,7 @@
     height: rem(38);
     padding-left: var(--mantine-spacing-md);
     padding-right: var(--mantine-spacing-md);
+    color: var(--mantine-color-text);
     
     &:hover {
       background-color: light-dark(var(--mantine-color-gray-1), var(--mantine-color-dark-5));
@@ -39,5 +46,96 @@
     
     &[data-active] {
       border-color: var(--mantine-color-blue-6);
+    }
+  }
+
+  /* Mobile table styles */
+  @media (max-width: $mantine-breakpoint-md) {
+    .tableWrapper {
+      width: 100%;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      margin: 0 -1rem;
+      padding: 0 1rem;
+      border-radius: var(--mantine-radius-md);
+      background-color: light-dark(var(--mantine-color-gray-0), var(--mantine-color-dark-7));
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    }
+
+    table {
+      width: max-content;
+      min-width: 100%;
+    }
+
+    th, td {
+      padding: 0.75rem 0.5rem;
+      font-size: 0.9rem;
+      white-space: nowrap;
+    }
+
+    /* Hide warranty column on mobile */
+    th:nth-child(3), td:nth-child(3) {
+      display: none;
+    }
+
+    /* Price badge specific styles */
+    :global(.mantine-Badge-root) {
+      font-size: 0.85rem;
+      padding: 0.25rem 0.5rem;
+      white-space: nowrap;
+      display: inline-block;
+      width: auto;
+      min-width: fit-content;
+      max-width: none;
+    }
+
+    /* Mobile tab styles */
+    :global(.mantine-Tabs-tab) {
+      padding: 0.5rem;
+      font-size: 0.8rem;
+      height: rem(32);
+    }
+
+    :global(.mantine-Tabs-tabIcon) {
+      width: 1.2rem;
+      height: 1.2rem;
+    }
+
+    :global(.mantine-Tabs-tabLabel) {
+      display: none;
+    }
+
+    /* Hardware sub-tabs specific styles */
+    :global(.mantine-Tabs-panel) :global(.mantine-Tabs-tab) {
+      padding: 0.25rem 0.5rem;
+      font-size: 0.75rem;
+      height: rem(28);
+    }
+
+    :global(.mantine-Tabs-panel) :global(.mantine-Tabs-tabIcon) {
+      width: 1rem;
+      height: 1rem;
+    }
+
+    /* Add some spacing between main tabs and sub-tabs */
+    :global(.mantine-Tabs-panel) {
+      margin-top: var(--mantine-spacing-xs);
+    }
+  }
+
+  /* Small mobile devices */
+  @media (max-width: $mantine-breakpoint-xs) {
+    th, td {
+      padding: 0.5rem 0.25rem;
+      font-size: 0.85rem;
+    }
+
+    :global(.mantine-Badge-root) {
+      font-size: 0.8rem;
+      padding: 0.2rem 0.4rem;
+    }
+
+    .wrapper {
+      padding: var(--mantine-spacing-lg) 0;
     }
   }

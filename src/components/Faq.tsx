@@ -8,9 +8,19 @@ export function Faq() {
         Najczęściej zadawane pytania
       </Title>
       
-      <Space h="xl" /> {/* Added spacing element */}
+      <Space h="xl" />
 
       <Accordion variant="separated" radius="md">
+        <Accordion.Item className={classes.item} value="why-me">
+          <Accordion.Control>Dlaczego ja?</Accordion.Control>
+          <Accordion.Panel>
+            <Text>
+              Jestem zawsze zorientowany na IT, a po utracie pracy postanowiłem podzielić się swoim doświadczeniem nie tylko z rodziną. 
+              Moje podejście do każdego klienta jest indywidualne i profesjonalne, a doświadczenie w branży IT pozwala mi oferować kompleksowe rozwiązania.
+            </Text>
+          </Accordion.Panel>
+        </Accordion.Item>
+
         <Accordion.Item className={classes.item} value="diagnostics">
           <Accordion.Control>Ile kosztuje diagnostyka usterki?</Accordion.Control>
           <Accordion.Panel>
@@ -79,13 +89,14 @@ export function Faq() {
             </Text>
           </Accordion.Panel>
         </Accordion.Item>
+
         <Accordion.Item className={classes.item} value="receipt">
-        <Accordion.Control>Czy dostanę paragon?</Accordion.Control>
-        <Accordion.Panel>
+          <Accordion.Control>Czy dostanę paragon?</Accordion.Control>
+          <Accordion.Panel>
             <Text>
-                Serwis działa na zasadach nierejestrowanej działalności. Do każdej usługi wystawiamy rachunek za usługę, za części klient otrzymuje paragon ze sklepu.
+              Serwis działa na zasadach nierejestrowanej działalności. Do każdej usługi wystawiamy rachunek za usługę, za części klient otrzymuje paragon ze sklepu.
             </Text>
-        </Accordion.Panel>
+          </Accordion.Panel>
         </Accordion.Item>
       </Accordion>
     </Container>

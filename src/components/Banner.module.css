@@ -10,6 +10,7 @@
   overflow: hidden;
   color: white;
   text-align: center;
+  margin-top: 60px;
 }
 
 .banner::before {
@@ -37,18 +38,33 @@
   margin: 0 auto;
 }
 
-.icon {
-  margin-bottom: 1.5rem;
-  color: rgba(255, 255, 255, 0.9);
-  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
+.logoWrapper {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0 1rem;
+  margin-top: 1rem;
+}
+
+.logo {
+  max-width: 100%;
+  height: auto;
+  transition: transform 0.3s ease;
+  display: block;
+}
+
+.logo:hover {
+  transform: scale(1.05);
 }
 
 .title {
   font-weight: 800;
-  font-size: clamp(1.8rem, 4vw, 2.8rem);
+  font-size: clamp(1.5rem, 3vw, 2.8rem);
   line-height: 1.3;
   margin-bottom: 2rem;
   text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  padding: 0 1rem;
 }
 
 .titleAccent {
@@ -74,13 +90,14 @@
   justify-content: center;
   gap: 1rem 2rem;
   margin-bottom: 3rem;
+  padding: 0 1rem;
 }
 
 .benefitItem {
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  font-size: 1.1rem;
+  font-size: clamp(0.9rem, 2vw, 1.1rem);
   font-weight: 500;
 }
 
@@ -104,7 +121,8 @@
 
 @media (max-width: 768px) {
   .banner {
-    padding: 4rem 1rem;
+    padding: 3rem 0;
+    margin-top: 50px;
   }
   
   .banner::before {
@@ -114,5 +132,32 @@
   .benefits {
     flex-direction: column;
     gap: 0.75rem;
+  }
+
+  .benefitItem {
+    font-size: 0.95rem;
+  }
+
+  .logoWrapper {
+    margin-top: 0.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .banner {
+    padding: 2.5rem 0;
+    margin-top: 45px;
+  }
+
+  .title {
+    font-size: 1.5rem;
+  }
+
+  .benefitItem {
+    font-size: 0.9rem;
+  }
+
+  .logoWrapper {
+    margin-top: 0.25rem;
   }
 }
