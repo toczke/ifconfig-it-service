@@ -1,5 +1,5 @@
-import { Container, Text, Title, Stack, Group } from '@mantine/core';
-import { IconTools, IconClock, IconShield } from '@tabler/icons-react';
+import { Container, Text, Stack, Group } from '@mantine/core';
+import { IconTools, IconBrain, IconShield } from '@tabler/icons-react';
 import { MantineLogo } from '@mantinex/mantine-logo';
 import classes from './Banner.module.css';
 
@@ -13,24 +13,18 @@ export function Banner() {
             <MantineLogo size={80} className={classes.logo} />
           </div>
 
-          <Stack gap="xs" align="center" className={classes.textContent}>
-            <Title className={classes.title}>
-              Sąsiedzki serwis komuterowy
-            </Title>
-          </Stack>
-
           <Group className={classes.benefits}>
             <div className={classes.benefitItem}>
               <IconTools size={20} />
-              <Text>Ponad 10 lat doświadczenia w IT</Text>
+              <Text>10+ lat doświadczenia w IT</Text>
             </div>
             <div className={classes.benefitItem}>
-              <IconClock size={20} />
-              <Text>Ekspresowe naprawy</Text>
+              <IconBrain size={20} />
+              <Text>Eksperci w swojej dziedzinie</Text>
             </div>
             <div className={classes.benefitItem}>
               <IconShield size={20} />
-              <Text>Gwarancja zadowolenia</Text>
+              <Text>Gwarancja jakości usług</Text>
             </div>
           </Group>
         </Stack>
