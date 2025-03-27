@@ -10,7 +10,7 @@ export function Banner() {
       <Container size="lg" className={classes.container}>
         <Stack align="center" gap="xl">
           <div className={classes.logoWrapper}>
-            <MantineLogo size={120} className={classes.logo} />
+            <MantineLogo size={80} className={classes.logo} />
           </div>
 
           <Stack gap="xs" align="center" className={classes.textContent}>

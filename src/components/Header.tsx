@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Burger, Container, Group, AppShell, Tooltip, Button, ActionIcon, useMantineColorScheme, Box } from '@mantine/core';
+import { Burger, Container, Group, AppShell, Tooltip, Button, ActionIcon, useMantineColorScheme, Box, Drawer, Stack } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import { MantineLogo } from '@mantinex/mantine-logo';
 import { IconTools, IconPhone, IconCurrencyDollar, IconSun, IconMoon, IconQuestionMark, IconDeviceDesktop } from '@tabler/icons-react';
@@ -13,7 +13,7 @@ const services = [
 ];
 
 export function Header() {
-  const [opened, { toggle }] = useDisclosure(false);
+  const [opened, { toggle, close }] = useDisclosure(false);
   const [active, setActive] = useState<string | null>(null);
   const { colorScheme, toggleColorScheme } = useMantineColorScheme();
 
@@ -52,8 +52,8 @@ export function Header() {
         behavior: 'smooth'
       });
       setActive(sectionId);
+      close();
     }
-    toggle();
   };
 
   const navItems = services.map((service) => (
@@ -77,7 +77,7 @@ export function Header() {
 
   return (
     <AppShell.Header className={classes.header} withBorder={false}>
-      <Container size="lg" className={classes.inner}>
+      <Container size="100%" className={classes.inner}>
         <Group justify="space-between" h="100%" w="100%">
           <MantineLogo 
             size={28} 
@@ -125,6 +125,53 @@ export function Header() {
           />
         </Group>
       </Container>
+
+      <Drawer
+        opened={opened}
+        onClose={close}
+        size="100%"
+        padding="md"
+        hiddenFrom="sm"
+        zIndex={1000000}
+        withCloseButton={true}
+      >
+        <Stack gap="xl" p="md">
+          {services.map((service) => (
+            <Button
+              key={service.id}
+              variant="subtle"
+              size="lg"
+              leftSection={service.icon}
+              onClick={() => scrollToSection(service.id)}
+              className={classes.mobileLink}
+              data-active={active === service.id || undefined}
+              fullWidth
+            >
+              {service.label}
+            </Button>
+          ))}
+          <Button 
+            variant="filled"
+            color="blue"
+            radius="xl"
+            leftSection={<IconPhone size={16} />}
+            onClick={() => scrollToSection('kontakt')}
+            className={classes.mobileCtaButton}
+            fullWidth
+          >
+            Umów się teraz
+          </Button>
+          <Button 
+            variant="default"
+            leftSection={colorScheme === 'dark' ? <IconSun size={16} /> : <IconMoon size={16} />}
+            onClick={() => toggleColorScheme()}
+            className={classes.mobileThemeButton}
+            fullWidth
+          >
+            {colorScheme === 'dark' ? 'Tryb jasny' : 'Tryb ciemny'}
+          </Button>
+        </Stack>
+      </Drawer>
     </AppShell.Header>
   );
 }

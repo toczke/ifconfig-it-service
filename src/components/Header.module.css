@@ -24,11 +24,6 @@
   transition: all 0.2s ease;
 }
 
-.link[data-active] {
-  color: var(--mantine-color-white);
-  background-color: var(--mantine-color-blue-7);
-}
-
 .link:hover {
   background-color: var(--mantine-color-blue-1);
   color: var(--mantine-color-blue-7);
@@ -56,4 +51,48 @@
 
 [data-mantine-color-scheme='dark'] .theme-button {
   color: var(--mantine-color-gray-0);
+}
+
+.logo {
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.logo:hover {
+  transform: scale(1.05);
+}
+
+.mobileLink {
+  font-size: var(--mantine-font-size-lg);
+  height: 50px;
+}
+
+.mobileLink[data-active] {
+  background-color: var(--mantine-color-blue-7);
+  color: var(--mantine-color-white);
+}
+
+.mobileCtaButton {
+  margin-top: var(--mantine-spacing-xl);
+}
+
+.mobileThemeButton {
+  margin-top: var(--mantine-spacing-xs);
+}
+
+.burger {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.2s ease;
+}
+
+.burger:hover {
+  background-color: var(--mantine-color-dark-6);
+}
+
+[data-mantine-color-scheme='light'] .burger:hover {
+  background-color: var(--mantine-color-gray-1);
 }

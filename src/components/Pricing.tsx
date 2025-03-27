@@ -8,44 +8,42 @@ import {
   Badge
 } from '@mantine/core';
 import { 
-  IconHammer, 
+  IconDeviceLaptop, 
   IconCode, 
-  IconCpu, 
-  IconList,
-  IconDeviceLaptop,
-  IconDeviceDesktop
+  IconDeviceDesktop, 
+  IconList
 } from '@tabler/icons-react';
 import classes from './Pricing.module.css';
 
 const commonPricing = [
-  { service: 'Diagnostyka', price: '0 zł', duration: '1-2h', warranty: '-', parts: 'W przypadku zrezygnowania z usługi naprawy 50 zł' },
-  { service: 'Czyszczenie sprzętu (+ wymiana pasty termoprzewodzącej)', price: '100-200 zł', duration: '1-6h', warranty: '3 miesiące', parts: 'Zamień pastę na PTM7950 + 50 zł' },
-  { service: 'Instalacja systemu', price: '100 zł', duration: '1-2h', warranty: '1 miesiąc', parts: 'Licencja na system operacyjny (w przypadku jej braku)' },
+  { service: 'Diagnostyka', price: '0 zł', warranty: '-', parts: 'W przypadku zrezygnowania z usługi naprawy 50 zł' },
+  { service: 'Czyszczenie sprzętu (+ wymiana pasty termoprzewodzącej)', price: '100-200 zł', warranty: '3 msc', parts: 'Zamień pastę na PTM7950 + 50 zł' },
+  { service: 'Instalacja systemu', price: '100 zł', warranty: '1 msc', parts: 'Licencja na system operacyjny (w przypadku jej braku)' },
 ];
 
 const laptopPricing = [
-  { service: 'Wymiana matrycy', price: '100 zł', duration: '1 dzień', warranty: '12 miesięcy', parts: '+ cena matrycy' },
-  { service: 'Wymiana baterii', price: '100 zł', duration: '1 dzień', warranty: '6 miesięcy', parts: '+ cena baterii' },
-  { service: 'Wymiana klawiatury', price: '100 zł', duration: '1 dzień', warranty: '12 miesięcy', parts: '+ cena klawiatury' },
+  { service: 'Wymiana matrycy', price: '100 zł', warranty: '12 msc', parts: '+ cena matrycy' },
+  { service: 'Wymiana baterii', price: '100 zł', warranty: '6 msc', parts: '+ cena baterii' },
+  { service: 'Wymiana klawiatury', price: '100 zł', warranty: '12 msc', parts: '+ cena klawiatury' },
 ];
 
 const desktopPricing = [
-  { service: 'Wymiana komponentu', price: '50 zł', duration: '1-2h', warranty: '12 miesięcy', parts: 'Koszt komponentu osobno' },
-  { service: 'OverClocking', price: '100 zł', duration: '4-6h', warranty: '-', parts: '' },
+  { service: 'Wymiana komponentu', price: '50 zł', warranty: '12 msc', parts: 'Koszt komponentu osobno' },
+  { service: 'OverClocking', price: '100 zł', warranty: '-', parts: '' },
 ];
 
 const softwarePricing = [
-  { service: 'Usuwanie wirusów', price: '120-250 zł', duration: '2-4h', warranty: '1 miesiąc', parts: '-' },
-  { service: 'Odzyskiwanie danych', price: 'od 300 zł', duration: '1-3 dni', warranty: '-', parts: '-' },
-  { service: 'Optymalizacja systemu', price: '100 zł', duration: '2-3h', warranty: '1 miesiąc', parts: '-' },
-  { service: 'Konfiguracja sieci domowej', price: '100-300 zł', duration: '2-6h', warranty: '1 miesiąc', parts: 'Cena uzależniona od złożoności' },
+  { service: 'Usuwanie wirusów', price: '120-250 zł', warranty: '1 msc', parts: '-' },
+  { service: 'Odzyskiwanie danych', price: 'od 300 zł', warranty: '-', parts: '-' },
+  { service: 'Optymalizacja systemu', price: '100 zł', warranty: '1 msc', parts: '-' },
+  { service: 'Konfiguracja sieci domowej', price: '100-300 zł', warranty: '1 msc', parts: 'Cena uzależniona od złożoności' },
 ];
 
 const customPcPricing = [
-  { service: 'Pomoc w wyborze konfiguracji', price: '100 zł', duration: '1 dzień', warranty: 'Zgodnie z częściami producentów', parts: 'Wariant bez składania' },
-  { service: 'Podstawowa - złożenie PC i instalacja systemu', price: '150 zł', duration: '1 dzień', warranty: 'Zgodnie z częściami producentów', parts: 'Koszt komponentów osobno' },
-  { service: 'Rozszerzona - Podstawowa + optymalizacja BIOSu oraz systemu', price: '200 zł', duration: '1-2 dni', warranty: 'Zgodnie z częściami producentów', parts: 'Koszt komponentów osobno' },
-  { service: 'Premium - Rozszerzona + montaż PTM7950 zamiast pasty', price: '250 zł', duration: '1-3 dni', warranty: 'Zgodnie z częściami producentów', parts: 'Koszt komponentów osobno' },
+  { service: 'Pomoc w wyborze konfiguracji', price: '100 zł', warranty: 'Zgodnie z częściami', parts: 'Wariant bez składania' },
+  { service: 'Podstawowa - złożenie PC i instalacja systemu', price: '150 zł', warranty: 'Zgodnie z częściami', parts: 'Koszt komponentów osobno' },
+  { service: 'Rozszerzona - Podstawowa + optymalizacja BIOSu oraz systemu', price: '200 zł', warranty: 'Zgodnie z częściami', parts: 'Koszt komponentów osobno' },
+  { service: 'Premium - Rozszerzona + montaż PTM7950 zamiast pasty', price: '250 zł', warranty: 'Zgodnie z częściami', parts: 'Koszt komponentów osobno' },
 ];
 
 export function Pricing() {
@@ -74,7 +72,7 @@ export function Pricing() {
             value="hardware"
             leftSection={
               <ThemeIcon variant="transparent" color="gray" size="sm">
-                <IconHammer size={18} />
+                <IconDeviceLaptop size={18} />
               </ThemeIcon>
             }
           >
@@ -94,7 +92,7 @@ export function Pricing() {
             value="custompc"
             leftSection={
               <ThemeIcon variant="transparent" color="gray" size="sm">
-                <IconCpu size={18} />
+                <IconDeviceDesktop size={18} />
               </ThemeIcon>
             }
           >
@@ -103,32 +101,32 @@ export function Pricing() {
         </Tabs.List>
 
         <Tabs.Panel value="common" pt="xs">
-          <Table striped highlightOnHover mt="md">
-            <Table.Thead>
-              <Table.Tr>
-                <Table.Th>Usługa</Table.Th>
-                <Table.Th>Cena usługi</Table.Th>
-                <Table.Th>Czas realizacji</Table.Th>
-                <Table.Th>Gwarancja</Table.Th>
-                <Table.Th>Dodatkowe koszty</Table.Th>
-              </Table.Tr>
-            </Table.Thead>
-            <Table.Tbody>
-              {commonPricing.map((item, index) => (
-                <Table.Tr key={index}>
-                  <Table.Td>{item.service}</Table.Td>
-                  <Table.Td>
-                    <Badge variant="light" color="blue">
-                      {item.price}
-                    </Badge>
-                  </Table.Td>
-                  <Table.Td>{item.duration}</Table.Td>
-                  <Table.Td>{item.warranty}</Table.Td>
-                  <Table.Td>{item.parts}</Table.Td>
+          <div className={classes.tableWrapper}>
+            <Table striped highlightOnHover mt="md">
+              <Table.Thead>
+                <Table.Tr>
+                  <Table.Th>Usługa</Table.Th>
+                  <Table.Th>Cena usługi</Table.Th>
+                  <Table.Th>Gwarancja</Table.Th>
+                  <Table.Th>Dodatkowe koszty</Table.Th>
                 </Table.Tr>
-              ))}
-            </Table.Tbody>
-          </Table>
+              </Table.Thead>
+              <Table.Tbody>
+                {commonPricing.map((item, index) => (
+                  <Table.Tr key={index}>
+                    <Table.Td>{item.service}</Table.Td>
+                    <Table.Td>
+                      <Badge variant="light" color="blue">
+                        {item.price}
+                      </Badge>
+                    </Table.Td>
+                    <Table.Td>{item.warranty}</Table.Td>
+                    <Table.Td>{item.parts}</Table.Td>
+                  </Table.Tr>
+                ))}
+              </Table.Tbody>
+            </Table>
+          </div>
         </Tabs.Panel>
 
         <Tabs.Panel value="hardware" pt="xs">
@@ -149,121 +147,121 @@ export function Pricing() {
             </Tabs.List>
 
             <Tabs.Panel value="laptop" pt="xs">
-              <Table striped highlightOnHover mt="md">
-                <Table.Thead>
-                  <Table.Tr>
-                    <Table.Th>Usługa</Table.Th>
-                    <Table.Th>Cena usługi</Table.Th>
-                    <Table.Th>Czas realizacji</Table.Th>
-                    <Table.Th>Gwarancja</Table.Th>
-                    <Table.Th>Koszt części</Table.Th>
-                  </Table.Tr>
-                </Table.Thead>
-                <Table.Tbody>
-                  {laptopPricing.map((item, index) => (
-                    <Table.Tr key={index}>
-                      <Table.Td>{item.service}</Table.Td>
-                      <Table.Td>
-                        <Badge variant="light" color="blue">
-                          {item.price}
-                        </Badge>
-                      </Table.Td>
-                      <Table.Td>{item.duration}</Table.Td>
-                      <Table.Td>{item.warranty}</Table.Td>
-                      <Table.Td>{item.parts}</Table.Td>
+              <div className={classes.tableWrapper}>
+                <Table striped highlightOnHover mt="md">
+                  <Table.Thead>
+                    <Table.Tr>
+                      <Table.Th>Usługa</Table.Th>
+                      <Table.Th>Cena usługi</Table.Th>
+                      <Table.Th>Gwarancja</Table.Th>
+                      <Table.Th>Koszt części</Table.Th>
                     </Table.Tr>
-                  ))}
-                </Table.Tbody>
-              </Table>
+                  </Table.Thead>
+                  <Table.Tbody>
+                    {laptopPricing.map((item, index) => (
+                      <Table.Tr key={index}>
+                        <Table.Td>{item.service}</Table.Td>
+                        <Table.Td>
+                          <Badge variant="light" color="blue">
+                            {item.price}
+                          </Badge>
+                        </Table.Td>
+                        <Table.Td>{item.warranty}</Table.Td>
+                        <Table.Td>{item.parts}</Table.Td>
+                      </Table.Tr>
+                    ))}
+                  </Table.Tbody>
+                </Table>
+              </div>
             </Tabs.Panel>
 
             <Tabs.Panel value="desktop" pt="xs">
-              <Table striped highlightOnHover mt="md">
-                <Table.Thead>
-                  <Table.Tr>
-                    <Table.Th>Usługa</Table.Th>
-                    <Table.Th>Cena usługi</Table.Th>
-                    <Table.Th>Czas realizacji</Table.Th>
-                    <Table.Th>Gwarancja</Table.Th>
-                    <Table.Th>Koszt części</Table.Th>
-                  </Table.Tr>
-                </Table.Thead>
-                <Table.Tbody>
-                  {desktopPricing.map((item, index) => (
-                    <Table.Tr key={index}>
-                      <Table.Td>{item.service}</Table.Td>
-                      <Table.Td>
-                        <Badge variant="light" color="blue">
-                          {item.price}
-                        </Badge>
-                      </Table.Td>
-                      <Table.Td>{item.duration}</Table.Td>
-                      <Table.Td>{item.warranty}</Table.Td>
-                      <Table.Td>{item.parts}</Table.Td>
+              <div className={classes.tableWrapper}>
+                <Table striped highlightOnHover mt="md">
+                  <Table.Thead>
+                    <Table.Tr>
+                      <Table.Th>Usługa</Table.Th>
+                      <Table.Th>Cena usługi</Table.Th>
+                      <Table.Th>Gwarancja</Table.Th>
+                      <Table.Th>Koszt części</Table.Th>
                     </Table.Tr>
-                  ))}
-                </Table.Tbody>
-              </Table>
+                  </Table.Thead>
+                  <Table.Tbody>
+                    {desktopPricing.map((item, index) => (
+                      <Table.Tr key={index}>
+                        <Table.Td>{item.service}</Table.Td>
+                        <Table.Td>
+                          <Badge variant="light" color="blue">
+                            {item.price}
+                          </Badge>
+                        </Table.Td>
+                        <Table.Td>{item.warranty}</Table.Td>
+                        <Table.Td>{item.parts}</Table.Td>
+                      </Table.Tr>
+                    ))}
+                  </Table.Tbody>
+                </Table>
+              </div>
             </Tabs.Panel>
           </Tabs>
         </Tabs.Panel>
 
         <Tabs.Panel value="software" pt="xs">
-          <Table striped highlightOnHover mt="md">
-            <Table.Thead>
-              <Table.Tr>
-                <Table.Th>Usługa</Table.Th>
-                <Table.Th>Cena usługi</Table.Th>
-                <Table.Th>Czas realizacji</Table.Th>
-                <Table.Th>Gwarancja</Table.Th>
-                <Table.Th>Uwagi</Table.Th>
-              </Table.Tr>
-            </Table.Thead>
-            <Table.Tbody>
-              {softwarePricing.map((item, index) => (
-                <Table.Tr key={index}>
-                  <Table.Td>{item.service}</Table.Td>
-                  <Table.Td>
-                    <Badge variant="light" color="blue">
-                      {item.price}
-                    </Badge>
-                  </Table.Td>
-                  <Table.Td>{item.duration}</Table.Td>
-                  <Table.Td>{item.warranty}</Table.Td>
-                  <Table.Td>{item.parts}</Table.Td>
+          <div className={classes.tableWrapper}>
+            <Table striped highlightOnHover mt="md">
+              <Table.Thead>
+                <Table.Tr>
+                  <Table.Th>Usługa</Table.Th>
+                  <Table.Th>Cena usługi</Table.Th>
+                  <Table.Th>Gwarancja</Table.Th>
+                  <Table.Th>Uwagi</Table.Th>
                 </Table.Tr>
-              ))}
-            </Table.Tbody>
-          </Table>
+              </Table.Thead>
+              <Table.Tbody>
+                {softwarePricing.map((item, index) => (
+                  <Table.Tr key={index}>
+                    <Table.Td>{item.service}</Table.Td>
+                    <Table.Td>
+                      <Badge variant="light" color="blue">
+                        {item.price}
+                      </Badge>
+                    </Table.Td>
+                    <Table.Td>{item.warranty}</Table.Td>
+                    <Table.Td>{item.parts}</Table.Td>
+                  </Table.Tr>
+                ))}
+              </Table.Tbody>
+            </Table>
+          </div>
         </Tabs.Panel>
 
         <Tabs.Panel value="custompc" pt="xs">
-          <Table striped highlightOnHover mt="md">
-            <Table.Thead>
-              <Table.Tr>
-                <Table.Th>Rodzaj usługi</Table.Th>
-                <Table.Th>Cena usługi</Table.Th>
-                <Table.Th>Czas realizacji</Table.Th>
-                <Table.Th>Gwarancja</Table.Th>
-                <Table.Th>Komponenty</Table.Th>
-              </Table.Tr>
-            </Table.Thead>
-            <Table.Tbody>
-              {customPcPricing.map((item, index) => (
-                <Table.Tr key={index}>
-                  <Table.Td>{item.service}</Table.Td>
-                  <Table.Td>
-                    <Badge variant="light" color="blue">
-                      {item.price}
-                    </Badge>
-                  </Table.Td>
-                  <Table.Td>{item.duration}</Table.Td>
-                  <Table.Td>{item.warranty}</Table.Td>
-                  <Table.Td>{item.parts}</Table.Td>
+          <div className={classes.tableWrapper}>
+            <Table striped highlightOnHover mt="md">
+              <Table.Thead>
+                <Table.Tr>
+                  <Table.Th>Rodzaj usługi</Table.Th>
+                  <Table.Th>Cena usługi</Table.Th>
+                  <Table.Th>Gwarancja</Table.Th>
+                  <Table.Th>Komponenty</Table.Th>
                 </Table.Tr>
-              ))}
-            </Table.Tbody>
-          </Table>
+              </Table.Thead>
+              <Table.Tbody>
+                {customPcPricing.map((item, index) => (
+                  <Table.Tr key={index}>
+                    <Table.Td>{item.service}</Table.Td>
+                    <Table.Td>
+                      <Badge variant="light" color="blue">
+                        {item.price}
+                      </Badge>
+                    </Table.Td>
+                    <Table.Td>{item.warranty}</Table.Td>
+                    <Table.Td>{item.parts}</Table.Td>
+                  </Table.Tr>
+                ))}
+              </Table.Tbody>
+            </Table>
+          </div>
         </Tabs.Panel>
       </Tabs>
 

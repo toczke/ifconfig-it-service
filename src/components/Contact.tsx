@@ -1,19 +1,8 @@
-import { 
-  TextInput, 
-  Textarea, 
-  Button, 
-  Container, 
-  Title, 
-  Text, 
-  Group, 
-  Box, 
-  Notification,
-  Select,
-  FileInput 
-} from '@mantine/core';
-import { useForm } from '@mantine/form';
-import { IconCheck, IconX, IconAt, IconPhone, IconUser, IconPhoto } from '@tabler/icons-react';
 import { useState } from 'react';
+import { Container, Title, Text, TextInput, Textarea, Button, Group, Select, FileInput, Notification, Grid, Paper } from '@mantine/core';
+import { IconUser, IconAt, IconPhone, IconPhoto, IconCheck, IconX } from '@tabler/icons-react';
+import { useForm } from '@mantine/form';
+import { sendToDiscord } from './DiscordWebhook';
 import classes from './Contact.module.css';
 
 export function Contact() {
@@ -21,111 +10,53 @@ export function Contact() {
   const [showSuccess, setShowSuccess] = useState(false);
   const [showError, setShowError] = useState(false);
 
-  const serviceTypes = [
-    { value: 'laptop', label: 'Naprawa Laptopa' },
-    { value: 'desktop', label: 'Naprawa Komputera' },
-    { value: 'software', label: 'Problem z Oprogramowaniem' },
-    { value: 'custompc', label: 'Budowa PC/Sprzęt' },
-    { value: 'other', label: 'Inne' },
-  ];
-
   const form = useForm({
     initialValues: {
       name: '',
       email: '',
       phone: '',
-      message: '',
       serviceType: '',
-      photo: null as File | null
+      deviceModel: '',
+      message: '',
+      photo: null,
     },
     validate: {
-      name: (value) => {
-        if (!value) return 'Imię jest wymagane';
-        if (value.length < 2) return 'Imię jest zbyt krótkie (min. 2 znaki)';
-        if (value.length > 50) return 'Imię jest zbyt długie (max 50 znaków)';
-        return null;
-      },
-      email: (value) => {
-        if (!value) return 'Email jest wymagany';
-        if (!/^\S+@\S+$/.test(value)) return 'Nieprawidłowy format email';
-        return null;
-      },
+      name: (value) => (!value ? 'Imię jest wymagane' : null),
+      email: (value) => (/^\S+@\S+$/.test(value) ? null : 'Nieprawidłowy email'),
       phone: (value) => {
-        if (!value) return 'Numer telefonu jest wymagany';
-        const cleaned = value.replace(/\D/g, '');
-        if (cleaned.length < 9) return 'Numer jest zbyt krótki (min. 9 cyfr)';
-        if (cleaned.length > 15) return 'Numer jest zbyt długi (max 15 cyfr)';
-        if (!/^[0-9+ ]+$/.test(value)) return 'Tylko cyfry, spacje i + są dozwolone';
-        return null;
+        if (!value) return 'Telefon jest wymagany';
+        const cleanPhone = value.replace(/\D/g, '');
+        const phoneRegex = /^(\+48|48)?[0-9]{9}$/;
+        return phoneRegex.test(cleanPhone) ? null : 'Nieprawidłowy numer telefonu';
       },
-      message: (value) => {
-        if (!value) return 'Wiadomość jest wymagana';
-        if (value.length < 10) return 'Wiadomość jest zbyt krótka (min. 10 znaków)';
-        if (value.length > 1000) return 'Wiadomość jest zbyt długa (max 1000 znaków)';
-        return null;
-      },
-      photo: (value) => {
-        if (value) {
-          // Check file size (max 5MB)
-          if (value.size > 5 * 1024 * 1024) return 'Plik jest zbyt duży (max 5MB)';
-          // Check file type
-          const validTypes = ['image/jpeg', 'image/png', 'image/gif'];
-          if (!validTypes.includes(value.type)) return 'Nieprawidłowy typ pliku (akceptowane: JPG, PNG, GIF)';
-        }
-        return null;
-      }
+      serviceType: (value) => (!value ? 'Wybierz typ usługi' : null),
+      message: (value) => (!value ? 'Wiadomość jest wymagana' : null),
     },
-    validateInputOnBlur: true,
   });
 
-  const sendToDiscord = async (values: typeof form.values) => {
+  const handleSubmit = async (values: typeof form.values) => {
     setLoading(true);
     setShowSuccess(false);
     setShowError(false);
 
     try {
-      const webhookUrl = 'YOUR_DISCORD_WEBHOOK_URL';
-
-      const selectedService = serviceTypes.find(type => type.value === values.serviceType)?.label || values.serviceType || 'Nie wybrano';
-
-      // Create form data to handle file upload
-      const formData = new FormData();
-      formData.append('name', values.name);
-      formData.append('email', values.email);
-      formData.append('phone', values.phone);
-      formData.append('message', values.message);
-      formData.append('serviceType', selectedService);
-      if (values.photo) {
-        formData.append('photo', values.photo);
-      }
-
-      const response = await fetch(webhookUrl, {
-        method: 'POST',
-        body: formData,
-      });
-
-      if (response.ok) {
-        form.reset();
+      const success = await sendToDiscord(values);
+      
+      if (success) {
         setShowSuccess(true);
+        form.reset();
       } else {
         throw new Error('Failed to send message');
       }
     } catch (error) {
-      console.error('Error sending to Discord:', error);
       setShowError(true);
     } finally {
       setLoading(false);
     }
   };
 
-  const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const input = e.target.value;
-    const cleaned = input.replace(/[^\d+ ]/g, '');
-    form.setFieldValue('phone', cleaned);
-  };
-
   return (
-    <Container size="md" py="xl" id="kontakt" className={classes.wrapper}>
+    <Container size="lg" py="xl" id="kontakt" className={classes.wrapper}>
       <Title order={2} className={classes.title} ta="center">
         Skontaktuj się z nami
       </Title>
@@ -133,121 +64,129 @@ export function Contact() {
         Wypełnij formularz, a odpowiemy najszybciej jak to możliwe
       </Text>
 
-      <Box maw={600} mx="auto" mt="xl">
-        <form onSubmit={form.onSubmit(sendToDiscord)}>
-          <TextInput
-            label="Imię"
-            placeholder="Twoje imię"
-            required
-            leftSection={<IconUser size={16} />}
-            {...form.getInputProps('name')}
-            errorProps={{ style: { whiteSpace: 'pre-wrap' } }}
-          />
+      <Grid gutter="xl" mt="xl">
+        <Grid.Col span={{ base: 12, md: 6 }} order={{ base: 2, md: 1 }}>
+          <Paper shadow="sm" p="md" radius="md" withBorder h="100%" className={classes.mapContainer}>
+            <iframe
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2324.1234567890123!2d18.612601428270686!3d54.30110273268977!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x46fd0a0a0a0a0a0a%3A0x0!2zNTTCsDE4JzA0LjAiTiAxOMKwMzYnNDUuNCJF!5e0!3m2!1spl!2spl!4v1234567890123!5m2!1spl!2spl"
+              width="100%"
+              height="450"
+              style={{ border: 0 }}
+              allowFullScreen
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+              title="Lokalizacja firmy"
+            />
+          </Paper>
+        </Grid.Col>
 
-          <TextInput
-            label="Email"
-            placeholder="twój@email.com"
-            required
-            leftSection={<IconAt size={16} />}
-            mt="md"
-            {...form.getInputProps('email')}
-            errorProps={{ style: { whiteSpace: 'pre-wrap' } }}
-          />
+        <Grid.Col span={{ base: 12, md: 6 }} order={{ base: 1, md: 2 }}>
+          <Paper shadow="sm" p="md" radius="md" withBorder>
+            <form onSubmit={form.onSubmit(handleSubmit)}>
+              <TextInput
+                label="Imię"
+                placeholder="Twoje imię"
+                leftSection={<IconUser size={16} />}
+                {...form.getInputProps('name')}
+                required
+              />
 
-          <TextInput
-            label="Telefon"
-            placeholder="123 456 789 lub +48 123 456 789"
-            required
-            leftSection={<IconPhone size={16} />}
-            mt="md"
-            value={form.values.phone}
-            onChange={handlePhoneChange}
-            onBlur={() => form.validateField('phone')}
-            error={form.errors.phone}
-            errorProps={{ style: { whiteSpace: 'pre-wrap' } }}
-          />
+              <TextInput
+                label="Email"
+                placeholder="twoj@email.com"
+                leftSection={<IconAt size={16} />}
+                {...form.getInputProps('email')}
+                required
+              />
 
-          <Select
-            label="Typ usługi (opcjonalne)"
-            placeholder="Wybierz kategorię"
-            data={serviceTypes}
-            mt="md"
-            clearable
-            {...form.getInputProps('serviceType')}
-          />
+              <TextInput
+                label="Telefon"
+                placeholder="+48 123 456 789"
+                leftSection={<IconPhone size={16} />}
+                {...form.getInputProps('phone')}
+                required
+              />
 
-          <Textarea
-            label="Wiadomość"
-            placeholder="Opisz swój problem lub zapytanie"
-            required
-            minRows={4}
-            mt="md"
-            {...form.getInputProps('message')}
-            errorProps={{ style: { whiteSpace: 'pre-wrap' } }}
-          />
+              <Select
+                label="Typ usługi"
+                placeholder="Wybierz typ usługi"
+                data={[
+                  { value: 'Naprawa komputera', label: 'Naprawa komputera' },
+                  { value: 'Naprawa laptopa', label: 'Naprawa laptopa' },
+                  { value: 'Składanie PC', label: 'Składanie PC' },
+                  { value: 'Pomoc w wyborze', label: 'Pomoc w wyborze konfiguracji' },
+                  { value: 'Inne', label: 'Inne' },
+                ]}
+                {...form.getInputProps('serviceType')}
+                required
+              />
 
-          <FileInput
-            label="Zdjęcie problemu (opcjonalne)"
-            placeholder="Kliknij aby dodać zdjęcie"
-            accept="image/png,image/jpeg,image/gif"
-            leftSection={<IconPhoto size={16} />}
-            mt="md"
-            clearable
-            {...form.getInputProps('photo')}
-            errorProps={{ style: { whiteSpace: 'pre-wrap' } }}
-          />
-          <Text size="xs" c="dimmed" mt={4}>
-            Maksymalny rozmiar pliku: 5MB (JPG, PNG, GIF)
-          </Text>
+              <TextInput
+                label="Model urządzenia (opcjonalnie)"
+                placeholder="np. Dell XPS 13, Lenovo ThinkPad T14"
+                {...form.getInputProps('deviceModel')}
+              />
 
-          <Group justify="center" mt="xl">
-            <Button 
-              type="submit" 
-              size="md"
-              loading={loading}
-              disabled={!form.isValid()}
-            >
-              Wyślij wiadomość
-            </Button>
-          </Group>
-        </form>
+              <Textarea
+                label="Wiadomość"
+                placeholder="Opisz szczegółowo problem lub zapytanie"
+                minRows={4}
+                {...form.getInputProps('message')}
+                required
+              />
 
-        {showSuccess && (
-          <Notification
-            icon={<IconCheck size={20} />}
-            color="teal"
-            title="Wysłano!"
-            mt="md"
-            onClose={() => setShowSuccess(false)}
-          >
-            Twoja wiadomość została wysłana. Skontaktujemy się wkrótce!
-          </Notification>
-        )}
+              <FileInput
+                label="Zdjęcie (opcjonalnie)"
+                placeholder="Wybierz zdjęcie"
+                accept="image/*"
+                leftSection={<IconPhoto size={16} />}
+                {...form.getInputProps('photo')}
+              />
 
-        {showError && (
-          <Notification
-            icon={<IconX size={20} />}
-            color="red"
-            title="Błąd!"
-            mt="md"
-            onClose={() => setShowError(false)}
-          >
-            Wystąpił błąd podczas wysyłania. Spróbuj ponownie później.
-          </Notification>
-        )}
+              <Group justify="flex-end" mt="md">
+                <Button type="submit" loading={loading}>
+                  Wyślij wiadomość
+                </Button>
+              </Group>
+            </form>
 
-        {/* Urgent case button */}
-        <Group justify="center" mt="xl">
-          <Button 
-            variant="light" 
-            color="red" 
-            leftSection={<IconPhone size={16} />}
-            onClick={() => window.location.href = "tel:+48792172936"} // Dials the phone number
-          >
-            Pilny przypadek? Zadzwoń do nas
-          </Button>
-        </Group>
-      </Box>
+            {showSuccess && (
+              <Notification
+                icon={<IconCheck size={20} />}
+                color="teal"
+                title="Wysłano!"
+                mt="md"
+                onClose={() => setShowSuccess(false)}
+              >
+                Twoja wiadomość została wysłana. Skontaktujemy się wkrótce!
+              </Notification>
+            )}
+
+            {showError && (
+              <Notification
+                icon={<IconX size={20} />}
+                color="red"
+                title="Błąd!"
+                mt="md"
+                onClose={() => setShowError(false)}
+              >
+                Wystąpił błąd podczas wysyłania. Spróbuj ponownie później.
+              </Notification>
+            )}
+
+            <Group justify="center" mt="md">
+              <Button 
+                variant="light" 
+                color="red" 
+                leftSection={<IconPhone size={16} />}
+                onClick={() => window.location.href = "tel:+48792172936"}
+              >
+                Pilny przypadek? Zadzwoń do nas
+              </Button>
+            </Group>
+          </Paper>
+        </Grid.Col>
+      </Grid>
     </Container>
   );
 }
