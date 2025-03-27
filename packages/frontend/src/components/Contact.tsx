@@ -1,9 +1,23 @@
 import { useState } from 'react';
-import { Container, Title, Text, TextInput, Textarea, Button, Group, Select, FileInput, Notification, Grid, Paper } from '@mantine/core';
-import { IconUser, IconAt, IconPhone, IconPhoto, IconCheck, IconX } from '@tabler/icons-react';
+import { Container, Title, Text, TextInput, Textarea, Button, Group, Select, Notification, Grid, Paper, Alert } from '@mantine/core';
+import { IconUser, IconAt, IconPhone, IconX } from '@tabler/icons-react';
 import { useForm } from '@mantine/form';
-import { sendToDiscord } from './DiscordWebhook';
 import classes from './Contact.module.css';
+
+interface DiscordEmbed {
+  title: string;
+  color: number;
+  fields: {
+    name: string;
+    value: string;
+    inline: boolean;
+  }[];
+  timestamp: string;
+}
+
+interface DiscordWebhookMessage {
+  embeds: DiscordEmbed[];
+}
 
 export function Contact() {
   const [loading, setLoading] = useState(false);
@@ -18,7 +32,6 @@ export function Contact() {
       serviceType: '',
       deviceModel: '',
       message: '',
-      photo: null,
     },
     validate: {
       name: (value) => (!value ? 'Imię jest wymagane' : null),
@@ -34,22 +47,73 @@ export function Contact() {
     },
   });
 
-  const handleSubmit = async (values: typeof form.values) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
     setLoading(true);
     setShowSuccess(false);
     setShowError(false);
 
     try {
-      const success = await sendToDiscord(values);
+      const webhookUrl = import.meta.env.VITE_DISCORD_WEBHOOK_URL;
       
-      if (success) {
-        setShowSuccess(true);
-        form.reset();
-      } else {
-        throw new Error('Failed to send message');
+      // Create a formatted message for Discord
+      const discordMessage: DiscordWebhookMessage = {
+        embeds: [{
+          title: 'Nowe zgłoszenie serwisowe',
+          color: 0x00ff00, // Green color
+          fields: [
+            {
+              name: 'Imię',
+              value: form.values.name,
+              inline: true
+            },
+            {
+              name: 'Email',
+              value: form.values.email,
+              inline: true
+            },
+            {
+              name: 'Telefon',
+              value: form.values.phone,
+              inline: true
+            },
+            {
+              name: 'Typ usługi',
+              value: form.values.serviceType,
+              inline: true
+            },
+            {
+              name: 'Model urządzenia',
+              value: form.values.deviceModel || 'Nie podano',
+              inline: true
+            },
+            {
+              name: 'Wiadomość',
+              value: form.values.message,
+              inline: false
+            }
+          ],
+          timestamp: new Date().toISOString()
+        }]
+      };
+
+      const response = await fetch(webhookUrl, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(discordMessage),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to send message to Discord');
       }
-    } catch (error) {
+
+      setShowSuccess(true);
+      form.reset();
+    } catch (err) {
       setShowError(true);
+      console.error('Error submitting form:', err);
     } finally {
       setLoading(false);
     }
@@ -68,7 +132,7 @@ export function Contact() {
         <Grid.Col span={{ base: 12, md: 6 }} order={{ base: 2, md: 1 }}>
           <Paper shadow="sm" p="md" radius="md" withBorder h="100%" className={classes.mapContainer}>
             <iframe
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2324.1234567890123!2d18.612601428270686!3d54.30110273268977!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x46fd0a0a0a0a0a0a%3A0x0!2zNTTCsDE4JzA0LjAiTiAxOMKwMzYnNDUuNCJF!5e0!3m2!1spl!2spl!4v1234567890123!5m2!1spl!2spl"
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2324.1234567890123!2d18.612601428270686!3d54.30110273268977!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x46fd0a0a0a0a0a0a%3A0x0!2zNTVCsDE4JzA0LjAiTiAxOMKwMzYnNDUuNCJF!5e0!3m2!1spl!2spl!4v1234567890123!5m2!1spl!2spl"
               width="100%"
               height="450"
               style={{ border: 0 }}
@@ -82,7 +146,7 @@ export function Contact() {
 
         <Grid.Col span={{ base: 12, md: 6 }} order={{ base: 1, md: 2 }}>
           <Paper shadow="sm" p="md" radius="md" withBorder>
-            <form onSubmit={form.onSubmit(handleSubmit)}>
+            <form onSubmit={handleSubmit}>
               <TextInput
                 label="Imię"
                 placeholder="Twoje imię"
@@ -135,14 +199,6 @@ export function Contact() {
                 required
               />
 
-              <FileInput
-                label="Zdjęcie (opcjonalnie)"
-                placeholder="Wybierz zdjęcie"
-                accept="image/*"
-                leftSection={<IconPhoto size={16} />}
-                {...form.getInputProps('photo')}
-              />
-
               <Group justify="flex-end" mt="md">
                 <Button type="submit" loading={loading}>
                   Wyślij wiadomość
@@ -151,15 +207,14 @@ export function Contact() {
             </form>
 
             {showSuccess && (
-              <Notification
-                icon={<IconCheck size={20} />}
-                color="teal"
-                title="Wysłano!"
-                mt="md"
+              <Alert
+                title="Sukces!"
+                color="green"
+                variant="filled"
                 onClose={() => setShowSuccess(false)}
               >
-                Twoja wiadomość została wysłana. Skontaktujemy się wkrótce!
-              </Notification>
+                <Text>Twoja wiadomość została wysłana pomyślnie.</Text>
+              </Alert>
             )}
 
             {showError && (
@@ -170,7 +225,7 @@ export function Contact() {
                 mt="md"
                 onClose={() => setShowError(false)}
               >
-                Wystąpił błąd podczas wysyłania. Spróbuj ponownie później.
+                Wystąpił błąd podczas wysyłania wiadomości. Spróbuj ponownie później.
               </Notification>
             )}
 

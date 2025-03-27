@@ -1,43 +1,19 @@
 {
-  "name": "it-service-frontend",
+  "name": "it-service-monorepo",
+  "version": "1.0.0",
   "private": true,
-  "version": "0.0.0",
-  "type": "module",
+  "workspaces": [
+    "packages/*"
+  ],
   "scripts": {
-    "dev": "npx vite",
-    "build": "tsc -b && vite build",
-    "lint": "eslint .",
-    "preview": "vite preview"
-  },
-  "dependencies": {
-    "@mantine/carousel": "^7.17.2",
-    "@mantine/core": "^7.17.2",
-    "@mantine/form": "^7.17.2",
-    "@mantine/hooks": "^7.17.2",
-    "@mantinex/dev-icons": "^1.1.0",
-    "@mantinex/mantine-logo": "^1.1.0",
-    "@tabler/icons-react": "^3.31.0",
-    "embla-carousel-autoplay": "^8.5.2",
-    "eslint-plugin-react-dom": "^1.32.0",
-    "eslint-plugin-react-x": "^1.32.0",
-    "leaflet": "^1.9.4",
-    "react": "^19.0.0",
-    "react-dom": "^19.0.0",
-    "react-icons": "^5.5.0",
-    "react-leaflet": "^5.0.0"
+    "dev": "docker-compose up",
+    "build": "docker-compose build",
+    "start": "docker-compose up -d",
+    "stop": "docker-compose down",
+    "frontend:dev": "cd packages/frontend && npm run dev",
+    "bot:dev": "cd packages/bot && npm run dev"
   },
   "devDependencies": {
-    "@eslint/js": "^9.21.0",
-    "@types/leaflet": "^1.9.17",
-    "@types/react": "^19.0.10",
-    "@types/react-dom": "^19.0.4",
-    "@vitejs/plugin-react": "^4.3.4",
-    "eslint": "^9.21.0",
-    "eslint-plugin-react-hooks": "^5.1.0",
-    "eslint-plugin-react-refresh": "^0.4.19",
-    "globals": "^15.15.0",
-    "typescript": "~5.7.2",
-    "typescript-eslint": "^8.24.1",
-    "vite": "^6.2.1"
+    "typescript": "^5.0.0"
   }
-}
+} 
