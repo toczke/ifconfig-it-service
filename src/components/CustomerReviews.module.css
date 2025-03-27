@@ -1,0 +1,43 @@
+/* CustomerReviews.module.css */
+.cardsWrapper {
+    display: flex;
+    width: 100%;
+  }
+  
+  .reviewsContainer {
+    width: max-content;
+    display: flex;
+    align-items: stretch;
+  }
+  
+  .reviewCard {
+    width: 260px;
+    background-color: var(--mantine-color-body);
+    flex: 0 0 auto;
+    display: flex;
+    border: 1px solid var(--mantine-color-gray-3);
+    transition: all 0.3s ease;
+  }
+  
+  .reviewCard:hover {
+    border-color: var(--mantine-color-blue-5);
+    box-shadow: 1 1 1 1px var(--mantine-color-blue-2);
+  }
+  
+  .cardContent {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .commentText {
+    flex-grow: 1;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 5;
+    -webkit-box-orient: vertical;
+  }
+  
+  .dateText {
+    margin-top: auto;
+  }

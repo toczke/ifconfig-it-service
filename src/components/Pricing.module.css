@@ -1,0 +1,43 @@
+.wrapper {
+    padding: var(--mantine-spacing-xl) 0;
+  }
+  
+  .title {
+    font-weight: 800;
+    font-size: rem(36px);
+    margin-bottom: var(--mantine-spacing-md);
+    
+    @media (max-width: $mantine-breakpoint-sm) {
+      font-size: rem(24px);
+    }
+  }
+  
+  .description {
+    max-width: rem(600px);
+    margin: auto;
+    
+    @media (max-width: $mantine-breakpoint-sm) {
+      font-size: var(--mantine-font-size-sm);
+    }
+  }
+  
+  .tabsList {
+    &::before {
+      display: none;
+    }
+  }
+  
+  .tab {
+    font-weight: 600;
+    height: rem(38);
+    padding-left: var(--mantine-spacing-md);
+    padding-right: var(--mantine-spacing-md);
+    
+    &:hover {
+      background-color: light-dark(var(--mantine-color-gray-1), var(--mantine-color-dark-5));
+    }
+    
+    &[data-active] {
+      border-color: var(--mantine-color-blue-6);
+    }
+  }

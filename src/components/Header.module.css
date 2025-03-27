@@ -1,0 +1,59 @@
+.header {
+  background-color: var(--mantine-color-dark-7);
+  border-bottom: 1px solid var(--mantine-color-dark-5);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 100%;
+}
+
+.link {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  border-radius: var(--mantine-radius-sm);
+  color: var(--mantine-color-gray-7);
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.link[data-active] {
+  color: var(--mantine-color-white);
+  background-color: var(--mantine-color-blue-7);
+}
+
+.link:hover {
+  background-color: var(--mantine-color-blue-1);
+  color: var(--mantine-color-blue-7);
+}
+
+[data-mantine-color-scheme='dark'] .link {
+  color: var(--mantine-color-gray-3);
+}
+
+[data-mantine-color-scheme='dark'] .link:hover {
+  background-color: var(--mantine-color-dark-5);
+  color: var(--mantine-color-white);
+}
+
+.linkText {
+  @media (max-width: 900px) {
+    display: none;
+  }
+}
+
+/* Ensure button text adapts to the theme */
+.theme-button {
+  color: var(--mantine-color-dark-7);
+}
+
+[data-mantine-color-scheme='dark'] .theme-button {
+  color: var(--mantine-color-gray-0);
+}
