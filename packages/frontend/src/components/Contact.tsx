@@ -135,7 +135,7 @@ export function Contact() {
               src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2324.1234567890123!2d18.612601428270686!3d54.30110273268977!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x46fd0a0a0a0a0a0a%3A0x0!2zNTVCsDE4JzA0LjAiTiAxOMKwMzYnNDUuNCJF!5e0!3m2!1spl!2spl!4v1234567890123!5m2!1spl!2spl"
               width="100%"
               height="450"
-              style={{ border: 0 }}
+              style={{ border: 0, borderRadius: 'var(--mantine-radius-md)' }}
               allowFullScreen
               loading="lazy"
               referrerPolicy="no-referrer-when-downgrade"
@@ -199,8 +199,15 @@ export function Contact() {
                 required
               />
 
-              <Group justify="flex-end" mt="md">
-                <Button type="submit" loading={loading}>
+              <Group justify="center" mt="md">
+                <Button 
+                  type="submit" 
+                  loading={loading}
+                  variant="gradient"
+                  gradient={{ from: 'teal', to: 'cyan', deg: 45 }}
+                  size="md"
+                  fullWidth
+                >
                   Wyślij wiadomość
                 </Button>
               </Group>
@@ -235,6 +242,8 @@ export function Contact() {
                 color="red" 
                 leftSection={<IconPhone size={16} />}
                 onClick={() => window.location.href = "tel:+48792172936"}
+                size="md"
+                fullWidth
               >
                 Pilny przypadek? Zadzwoń do nas
               </Button>
