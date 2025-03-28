@@ -18,7 +18,7 @@ export function RepairTimeline() {
       const timelineElement = timelineRef.current;
       if (!timelineElement) return;
   
-      const { top, bottom, height } = timelineElement.getBoundingClientRect();
+      const { bottom, height } = timelineElement.getBoundingClientRect();
       const windowHeight = window.innerHeight;
       
       // Calculate visibility (0 when top at screen bottom, 1 when bottom at screen top)
