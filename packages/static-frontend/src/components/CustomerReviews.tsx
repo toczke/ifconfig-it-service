@@ -81,7 +81,7 @@ export function CustomerReviews() {
       </ScrollArea>
 
       <Text c="dimmed" size="sm" mt="xl" ta="center">
-        * Opinie dotyczą usług wykonanych przed stworzeniem tej strony.
+        * Opinie dotyczą usług wykonanych przed stworzeniem tej strony, opinie z map google wkrótce.
       </Text>
     </Container>
   );

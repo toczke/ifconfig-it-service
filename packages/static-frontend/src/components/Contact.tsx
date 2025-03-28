@@ -56,11 +56,10 @@ export function Contact() {
     try {
       const webhookUrl = import.meta.env.VITE_DISCORD_WEBHOOK_URL;
       
-      // Create a formatted message for Discord
       const discordMessage: DiscordWebhookMessage = {
         embeds: [{
           title: 'Nowe zgłoszenie serwisowe',
-          color: 0x00ff00, // Green color
+          color: 0x00ff00,
           fields: [
             {
               name: 'Imię',
@@ -125,7 +124,7 @@ export function Contact() {
         Skontaktuj się z nami
       </Title>
       <Text c="dimmed" className={classes.description} ta="center" mt="md">
-        Wypełnij formularz, a odpowiemy najszybciej jak to możliwe
+        Wypełnij formularz, a odpowiemy najszybciej jak to możliwe.
       </Text>
 
       <Grid gutter="xl" mt="xl">
@@ -149,7 +148,7 @@ export function Contact() {
             <form onSubmit={handleSubmit}>
               <TextInput
                 label="Imię"
-                placeholder="Twoje imię"
+                placeholder="Imię"
                 leftSection={<IconUser size={16} />}
                 {...form.getInputProps('name')}
                 required
@@ -157,7 +156,7 @@ export function Contact() {
 
               <TextInput
                 label="Email"
-                placeholder="twoj@email.com"
+                placeholder="imię@twójmail.pl"
                 leftSection={<IconAt size={16} />}
                 {...form.getInputProps('email')}
                 required
@@ -165,7 +164,7 @@ export function Contact() {
 
               <TextInput
                 label="Telefon"
-                placeholder="+48 123 456 789"
+                placeholder="123 456 789"
                 leftSection={<IconPhone size={16} />}
                 {...form.getInputProps('phone')}
                 required
@@ -244,9 +243,8 @@ export function Contact() {
                 onClick={() => window.location.href = "tel:+48792172936"}
                 size="md"
                 fullWidth
-                disabled
               >
-                Pilny przypadek? Zadzwoń do nas (wkrótce dostępne)
+                Pilny przypadek? Zadzwoń do nas!
               </Button>
             </Group>
           </Paper>

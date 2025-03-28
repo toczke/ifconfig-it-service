@@ -20,7 +20,7 @@ export function Banner() {
           <Group className={classes.benefits}>
             <div className={classes.benefitItem}>
               <IconTools size={20} />
-              <Text>Ponad 10 lat doświadczenia w IT</Text>
+              <Text>Lata doświadczenia w IT</Text>
             </div>
             <div className={classes.benefitItem}>
               <IconBrain size={20} />
@@ -28,7 +28,7 @@ export function Banner() {
             </div>
             <div className={classes.benefitItem}>
               <IconShield size={20} />
-              <Text>Gwarancja jakości</Text>
+              <Text>Gwarancja zadowolenia</Text>
             </div>
           </Group>
         </Stack>
