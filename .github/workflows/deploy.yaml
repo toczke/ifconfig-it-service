@@ -36,7 +36,7 @@ jobs:
           IN_PROGRESS_CHANNEL_ID=${{ secrets.IN_PROGRESS_CHANNEL_ID }}
           DONE_CHANNEL_ID=${{ secrets.DONE_CHANNEL_ID }}
           REJECTED_CHANNEL_ID=${{ secrets.REJECTED_CHANNEL_ID }}
-          FRONTEND_URL=http://frontend:4173  # Internal communication to frontend's 4173
+          FRONTEND_URL=http://frontend:4173
           PORT=3001
           EOF
 
@@ -45,7 +45,7 @@ jobs:
           mkdir -p packages/static-frontend
           cat <<EOF > packages/static-frontend/.env
           VITE_DISCORD_WEBHOOK_URL=${{ secrets.VITE_DISCORD_WEBHOOK_URL }}
-          VITE_BOT_SERVER_URL=http://bot:3001  # Internal communication to bot
+          VITE_BOT_SERVER_URL=http://bot:3001
           EOF
 
   build:
@@ -55,12 +55,12 @@ jobs:
       - name: Build bot image
         run: |
           echo "${{ secrets.SUDO_PASSWORD }}" | sudo -S docker compose build bot
-          echo "Bot image built (Internal port: 3001)"
+          echo "✅ Bot image built (port 3001)"
 
       - name: Build frontend image
         run: |
           echo "${{ secrets.SUDO_PASSWORD }}" | sudo -S docker compose build frontend
-          echo "Frontend image built (Internal port: 4173, External: 8080)"
+          echo "✅ Frontend image built"
 
   deploy:
     runs-on: self-hosted
@@ -69,10 +69,17 @@ jobs:
       - name: Launch services
         run: |
           echo "${{ secrets.SUDO_PASSWORD }}" | sudo -S docker compose up -d
-          echo "Services running:"
-          echo "- Frontend: http://[YOUR_IP]:8080 (container:4173)"
-          echo "- Bot API: http://[YOUR_IP]:3001"
 
-      - name: Verify containers
+      - name: Display access information
         run: |
+          LOCAL_IP=$(hostname -I | awk '{print $1}')
+          echo "=============================================="
+          echo "🚀 Deployment Successful"
+          echo "=============================================="
+          echo "🌐 Access URLs:"
+          echo "- Frontend: http://$LOCAL_IP:4173"
+          echo "- Bot API:  http://$LOCAL_IP:3001"
+          echo ""
+          echo "🔍 Running containers:"
           echo "${{ secrets.SUDO_PASSWORD }}" | sudo -S docker ps --format "table {{.Names}}\t{{.Ports}}\t{{.Status}}"
+          echo "=============================================="
