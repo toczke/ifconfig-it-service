@@ -10,7 +10,7 @@ on:
         type: string
 
 jobs:
-  cleanup:
+  prepare:
     runs-on: self-hosted
     steps:
       - name: Cleanup old containers
@@ -18,20 +18,16 @@ jobs:
           echo "${{ secrets.SUDO_PASSWORD }}" | sudo -S docker compose down -v || true
           echo "${{ secrets.SUDO_PASSWORD }}" | sudo -S docker system prune -a -f
 
-  checkout:
-    runs-on: self-hosted
-    needs: cleanup
-    steps:
       - name: Checkout code
         uses: actions/checkout@v4
         with:
           ref: ${{ github.event.inputs.branch }}
 
-  setup-env:
+  configure:
     runs-on: self-hosted
-    needs: checkout
+    needs: prepare
     steps:
-      - name: Create bot .env
+      - name: Setup bot environment
         run: |
           mkdir -p packages/discord-bot
           cat <<EOF > packages/discord-bot/.env
@@ -40,28 +36,43 @@ jobs:
           IN_PROGRESS_CHANNEL_ID=${{ secrets.IN_PROGRESS_CHANNEL_ID }}
           DONE_CHANNEL_ID=${{ secrets.DONE_CHANNEL_ID }}
           REJECTED_CHANNEL_ID=${{ secrets.REJECTED_CHANNEL_ID }}
-          FRONTEND_URL=http://frontend:4173
+          FRONTEND_URL=http://frontend:4173  # Internal communication to frontend's 4173
           PORT=3001
           EOF
 
-      - name: Create frontend .env
+      - name: Setup frontend environment
         run: |
           mkdir -p packages/static-frontend
           cat <<EOF > packages/static-frontend/.env
           VITE_DISCORD_WEBHOOK_URL=${{ secrets.VITE_DISCORD_WEBHOOK_URL }}
-          VITE_BOT_SERVER_URL=http://bot:3001
+          VITE_BOT_SERVER_URL=http://bot:3001  # Internal communication to bot
           EOF
+
+  build:
+    runs-on: self-hosted
+    needs: configure
+    steps:
+      - name: Build bot image
+        run: |
+          echo "${{ secrets.SUDO_PASSWORD }}" | sudo -S docker compose build bot
+          echo "Bot image built (Internal port: 3001)"
+
+      - name: Build frontend image
+        run: |
+          echo "${{ secrets.SUDO_PASSWORD }}" | sudo -S docker compose build frontend
+          echo "Frontend image built (Internal port: 4173, External: 8080)"
 
   deploy:
     runs-on: self-hosted
-    needs: setup-env
+    needs: build
     steps:
-      - name: Build and deploy
+      - name: Launch services
         run: |
-          echo "${{ secrets.SUDO_PASSWORD }}" | sudo -S docker compose up -d --build
+          echo "${{ secrets.SUDO_PASSWORD }}" | sudo -S docker compose up -d
+          echo "Services running:"
+          echo "- Frontend: http://[YOUR_IP]:8080 (container:4173)"
+          echo "- Bot API: http://[YOUR_IP]:3001"
 
-      - name: Verify services
+      - name: Verify containers
         run: |
-          echo "${{ secrets.SUDO_PASSWORD }}" | sudo -S docker ps
-          echo "Frontend running on port 4173"
-          echo "Bot running on port 3001"
+          echo "${{ secrets.SUDO_PASSWORD }}" | sudo -S docker ps --format "table {{.Names}}\t{{.Ports}}\t{{.Status}}"
