@@ -4,10 +4,10 @@ services:
   frontend:
     container_name: it-service-frontend
     build:
-      context: ./packages/frontend
+      context: ./packages/static-frontend  # Updated path
       dockerfile: Dockerfile
     ports:
-      - "8080:4173"
+      - "4173:4173"
     volumes:
       - type: volume
         source: frontend-node-modules
