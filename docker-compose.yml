@@ -10,7 +10,7 @@ services:
       - "4173:4173"
     volumes:
       - type: bind
-        source: .\packages\frontend
+        source: .\packages\static-frontend
         target: /app
       - type: volume
         source: frontend-node-modules

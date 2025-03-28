@@ -1,16 +1,20 @@
 import { Container, Text, Stack, Group } from '@mantine/core';
 import { IconTools, IconBrain, IconShield } from '@tabler/icons-react';
-import { MantineLogo } from '@mantinex/mantine-logo';
+import IfconfigLogo from './IfconfigLogo';
 import classes from './Banner.module.css';
 
 export function Banner() {
   return (
     <div className={classes.banner}>
-      
       <Container size="lg" className={classes.container}>
         <Stack align="center" gap="xl">
           <div className={classes.logoWrapper}>
-            <MantineLogo size={80} className={classes.logo} />
+            <IfconfigLogo 
+              width={240}
+              height={240}
+              className={classes.logo} 
+              theme="auto" 
+            />
           </div>
 
           <Group className={classes.benefits}>

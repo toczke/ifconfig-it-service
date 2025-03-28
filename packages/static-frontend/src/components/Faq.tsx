@@ -94,7 +94,7 @@ export function Faq() {
           <Accordion.Control>Czy dostanę paragon?</Accordion.Control>
           <Accordion.Panel>
             <Text>
-              Serwis działa na zasadach nierejestrowanej działalności. Do każdej usługi wystawiamy rachunek za usługę, za części klient otrzymuje paragon ze sklepu.
+                Świadczymy usługi napraw i serwisu w ramach działalności nierejestrowanej. Wystawiamy rachunki za wykonane usługi. W przypadku zakupu części na życzenie klienta, klient otrzymuje paragon fiskalny bezpośrednio od sprzedawcy części.
             </Text>
           </Accordion.Panel>
         </Accordion.Item>

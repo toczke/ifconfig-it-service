@@ -1,7 +1,7 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import App from './App.tsx'
-import '@mantine/core/styles.css'; // Make sure Mantine styles are imported
+import '@mantine/core/styles.css';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>

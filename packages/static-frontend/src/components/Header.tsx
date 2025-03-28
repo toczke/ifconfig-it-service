@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
 import { Burger, Container, Group, AppShell, Tooltip, Button, ActionIcon, useMantineColorScheme, Box, Drawer, Stack } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
-import { MantineLogo } from '@mantinex/mantine-logo';
 import { IconTools, IconPhone, IconCurrencyDollar, IconSun, IconMoon, IconQuestionMark, IconDeviceDesktop } from '@tabler/icons-react';
+import IfconfigLogo from './IfconfigLogo';
 import classes from './Header.module.css';
 
 const services = [
@@ -22,7 +22,6 @@ export function Header() {
       const headerHeight = document.querySelector('header')?.offsetHeight || 0;
       const scrollPosition = window.scrollY + headerHeight + 20;
 
-      // Find which section is currently in view
       for (const service of services) {
         const element = document.getElementById(service.id);
         if (element) {
@@ -35,7 +34,6 @@ export function Header() {
       }
     };
 
-    // Set initial active section
     handleScroll();
 
     window.addEventListener('scroll', handleScroll);
@@ -79,21 +77,26 @@ export function Header() {
     <AppShell.Header className={classes.header} withBorder={false}>
       <Container size="100%" className={classes.inner}>
         <Group justify="space-between" h="100%" w="100%">
-          <MantineLogo 
-            size={28} 
-            onClick={() => {
+          <Box
+            component="a"
+            href="#"
+            onClick={(e) => {
+              e.preventDefault();
               window.scrollTo({ top: 0, behavior: 'smooth' });
               setActive(null);
-            }} 
-            className={classes.logo}
-          />
-          
+            }}
+            className={classes.logoContainer}
+            style={{ display: 'flex', alignItems: 'center' }}
+          >
+            <IfconfigLogo className={classes.logo} />
+          </Box>
+
           <Group gap="md" visibleFrom="sm">
             {navItems}
           </Group>
 
           <Group gap="sm" visibleFrom="sm">
-            <Button 
+            <Button
               variant="filled"
               color="blue"
               radius="xl"
@@ -115,11 +118,11 @@ export function Header() {
             </ActionIcon>
           </Group>
 
-          <Burger 
-            opened={opened} 
-            onClick={toggle} 
-            hiddenFrom="sm" 
-            size="sm" 
+          <Burger
+            opened={opened}
+            onClick={toggle}
+            hiddenFrom="sm"
+            size="sm"
             aria-label="Toggle navigation"
             className={classes.burger}
           />
@@ -133,7 +136,7 @@ export function Header() {
         padding="md"
         hiddenFrom="sm"
         zIndex={1000000}
-        withCloseButton={true}
+        withCloseButton
       >
         <Stack gap="xl" p="md">
           {services.map((service) => (
@@ -150,7 +153,7 @@ export function Header() {
               {service.label}
             </Button>
           ))}
-          <Button 
+          <Button
             variant="filled"
             color="blue"
             radius="xl"
@@ -161,10 +164,10 @@ export function Header() {
           >
             Umów się teraz
           </Button>
-          <Button 
+          <Button
             variant="default"
             leftSection={colorScheme === 'dark' ? <IconSun size={16} /> : <IconMoon size={16} />}
-            onClick={() => toggleColorScheme()}
+            onClick={toggleColorScheme}
             className={classes.mobileThemeButton}
             fullWidth
           >

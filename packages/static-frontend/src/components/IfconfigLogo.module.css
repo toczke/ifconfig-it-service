@@ -1,0 +1,47 @@
+.logo {
+    display: inline-block;
+    transition: all 0.3s ease;
+    --logo-primary: #1a1a1a;
+    --logo-secondary: #f8f8f8;
+  }
+  
+  /* Light theme (default) */
+  .logo.theme-light {
+    --logo-primary: #1a1a1a;  /* Dark gray for text */
+    --logo-secondary: #f8f8f8; /* Off-white for symbol */
+    filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.1));
+  }
+  
+  /* Dark theme */
+  .logo.theme-dark {
+    --logo-primary: #f0f0f0;  /* Light gray for text */
+    --logo-secondary: #3a3a3a; /* Dark gray for symbol */
+    filter: drop-shadow(0 1px 2px rgba(255, 255, 255, 0.1));
+  }
+  
+  /* Auto theme - respects prefers-color-scheme */
+  @media (prefers-color-scheme: dark) {
+    .logo:not(.theme-light) {
+      --logo-primary: #f0f0f0;
+      --logo-secondary: #3a3a3a;
+      filter: drop-shadow(0 1px 2px rgba(255, 255, 255, 0.1));
+    }
+  }
+  
+  /* Hover effects */
+  .logo:hover {
+    transform: scale(1.03);
+    opacity: 0.95;
+  }
+  
+  /* Active/pressed state */
+  .logo:active {
+    transform: scale(0.98);
+  }
+  
+  /* Focus styles for accessibility */
+  .logo:focus-visible {
+    outline: 2px solid var(--logo-primary);
+    outline-offset: 2px;
+    border-radius: 2px;
+  }
