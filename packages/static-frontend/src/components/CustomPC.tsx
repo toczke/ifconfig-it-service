@@ -100,11 +100,12 @@ export function CustomPC() {
               <IconDeviceDesktop size={26} />
             </ThemeIcon>
             <Title className={classes.title} order={2}>
-              Profesjonalne Składanie PC
+              Profesjonalne Składanie PC – Twój Komputer, Twoje Zwycięstwo
             </Title>
             <Text c="dimmed" className={classes.description}>
-              Kompleksowa usługa obejmująca doradztwo, dobór komponentów, montaż 
-              i optymalizację komputera dostosowanego do Twoich potrzeb.
+              Chcesz pograć w najnowsze gry, ale nie wiesz, na czym? A może marzysz o prezentach, które zrobią wrażenie? 
+              Nasza kompleksowa usługa obejmuje doradztwo, dobór najlepszych komponentów, profesjonalny montaż i optymalizację komputera, 
+              który będzie idealnie dopasowany do Twoich potrzeb i oczekiwań.
             </Text>
             <Button
               variant="outline"

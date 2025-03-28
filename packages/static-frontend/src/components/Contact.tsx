@@ -244,8 +244,9 @@ export function Contact() {
                 onClick={() => window.location.href = "tel:+48792172936"}
                 size="md"
                 fullWidth
+                disabled
               >
-                Pilny przypadek? Zadzwoń do nas
+                Pilny przypadek? Zadzwoń do nas (wkrótce dostępne)
               </Button>
             </Group>
           </Paper>

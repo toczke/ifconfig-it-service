@@ -79,6 +79,10 @@ export function CustomerReviews() {
           </Flex>
         </Box>
       </ScrollArea>
+
+      <Text c="dimmed" size="sm" mt="xl" ta="center">
+        * Opinie dotyczą usług wykonanych przed stworzeniem tej strony.
+      </Text>
     </Container>
   );
 }

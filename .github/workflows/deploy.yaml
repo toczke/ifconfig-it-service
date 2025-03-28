@@ -10,7 +10,7 @@ on:
         type: string
 
 env:
-  FRONTEND_PORT: 8080
+  FRONTEND_PORT: 4173
   BOT_PORT: 3001
 
 jobs:
@@ -52,6 +52,13 @@ jobs:
     runs-on: self-hosted
     needs: checkout
     steps:
+      - name: Verify directory structure
+        run: |
+          ls -la
+          ls -la packages/
+          ls -la packages/frontend
+          ls -la packages/discord-bot
+
       - name: Create .env file
         run: |
           cat <<EOF > .env
@@ -74,3 +81,4 @@ jobs:
       - name: Verify containers are running
         run: |
           echo "${{ secrets.SUDO_PASSWORD }}" | sudo -S docker ps
+          echo "${{ secrets.SUDO_PASSWORD }}" | sudo -S docker compose ps

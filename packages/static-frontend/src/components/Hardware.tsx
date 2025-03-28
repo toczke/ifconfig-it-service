@@ -1,34 +1,46 @@
 import { 
     IconDeviceLaptop, 
-    IconCloudComputing,
     IconBrush,
-    IconProgress
+    IconProgress,
+    IconDeviceDesktop,
+    IconArrowUp,
+    IconCpu
   } from '@tabler/icons-react';
   import { Grid, SimpleGrid, Text, ThemeIcon, Title, Container } from '@mantine/core';
   import classes from './Hardware.module.css';
   
   const services = [
     {
-      icon: IconDeviceLaptop,
-      title: 'Naprawy Laptopów',
-      description: 'Kompleksowa naprawa laptopów wszystkich marek',
+      icon: IconDeviceDesktop,
+      title: 'Komputer w Formie',
+      description: 'Naprawimy Twój komputer, nawet jeśli wydaje się, że nie ma już nadziei!',
     },
     {
-      icon: IconCloudComputing,
-      title: 'Modernizacja PC',
-      description: 'Wymiana procesorów, kart graficznych i dysków',
+      icon: IconArrowUp,
+      title: 'Upgrade PC',
+      description: 'Nowe procesory, karty graficzne, dyski – upgrade, który zmieni Twoje PC!',
+    },
+    {
+      icon: IconDeviceLaptop,
+      title: 'Laptop Reanimacja',
+      description: 'Przywróć życie swojemu laptopowi dzięki naszej kompleksowej naprawie!',
     },
     {
       icon: IconBrush,
-      title: 'Czyszczenie',
-      description: 'Profesjonalne czyszczenie układów chłodzenia',
+      title: 'Chłodzenie 2.0',
+      description: 'Profesjonalne czyszczenie układów chłodzenia – bo Twój sprzęt zasługuje na świeży start!',
     },
     {
       icon: IconProgress,
-      title: 'Instalacja oprogramowania',
-      description: 'Zainstalujemy Twoje oprogramowanie',
+      title: 'Software',
+      description: 'Zainstalujemy oprogramowanie, które napędzi Twój komputer!',
     },
-  ];
+    {
+      icon: IconCpu,
+      title: 'PC na Zamówienie',
+      description: 'Zbudujemy PC idealnie dopasowane do Twoich potrzeb – moc, wydajność, styl.',
+    },
+  ];  
   
   export function Hardware() {
     const items = services.map((service, index) => (
@@ -58,7 +70,7 @@ import {
               Profesjonalne Usługi Serwisowe
             </Title>
             <Text c="dimmed">
-              Oferujemy kompleksowe naprawy sprzętu komputerowego z gwarancją jakości.
+              Oferuję kompleksowe naprawy sprzętu komputerowego, które przywrócą Twojemu urządzeniu pełną sprawność! Niezależnie od tego, czy Twój laptop potrzebuje drobnej naprawy, czy komputer stacjonarny wymaga gruntownego serwisowania, gwarantuję najwyższą jakość usług oraz szybki czas realizacji. Zadbam o Twój sprzęt z pełnym profesjonalizmem i skutecznością, byś mógł cieszyć się jego niezawodnym działaniem!
             </Text>
           </Grid.Col>
           <Grid.Col span={{ base: 12, md: 7 }}>

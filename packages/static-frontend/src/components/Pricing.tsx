@@ -53,7 +53,7 @@ export function Pricing() {
         Cennik Usług
       </Title>
       <Text c="dimmed" className={classes.description} ta="center" mt="md">
-        Przejrzyste ceny za wszystkie nasze usługi, podane ceny są cenami brutto.
+        Przejrzyste ceny za wszystkie nasze usługi, w końcu nikt nie lubi kruczków.
       </Text>
 
       <Tabs defaultValue="common" mt="xl">
@@ -266,7 +266,7 @@ export function Pricing() {
       </Tabs>
 
       <Text c="dimmed" size="sm" mt="xl" ta="center">
-        * Ceny są orientacyjne i mogą się różnić w zależności od konkretnego przypadku
+          * Podane ceny są cenami brutto, w przypadku potrzeby wystawienia FV za usługę doliczona zostaje prowizja <a href="https://useme.com/pl/pricing/" target="_blank" rel="noopener noreferrer">USEME</a>
       </Text>
     </Container>
   );

@@ -12,64 +12,68 @@ export function RepairTimeline() {
     <Container id="repairs" size="md" py="xl">
       <Box mb="xl" ta="center">
         <Title order={2} mb="sm">
-          Jak wygląda proces naprawy?
+          Jak wygląda nasz proces naprawy?
         </Title>
         <Text c="dimmed" maw={600} mx="auto">
-          Nasz przejrzysty proces gwarantuje szybką i profesjonalną obsługę. 
-          Poniżej przedstawiamy kroki, które wykonujemy przy każdej naprawie, 
-          aby zapewnić najwyższą jakość usług.
+            Nikt z nas nie lubi skomplikowanych procesów, dlatego u nas wszystko jest proste i przejrzyste!
         </Text>
       </Box>
 
       <Space h="xl" />
 
       <Center>
-        <Timeline active={4} bulletSize={36} lineWidth={2}>
+        <Timeline active={5} bulletSize={36} lineWidth={2}>
           <Timeline.Item 
-            title="Zgłoszenie" 
+            title="Zgłoszenie Problemu" 
             bullet={<IconPhone size={24} />}
           >
             <Text c="dimmed" size="sm">
-              Skontaktuj się z nami telefonicznie lub przez formularz online. 
-              Opisz problem, a my zajmiemy się Twoim sprzętem.
+              Skontaktuj się z nami – przez formularz online lub telefonicznie. Opowiedz o problemie, a my zajmiemy się resztą!
             </Text>
           </Timeline.Item>
 
           <Timeline.Item
-            title="Diagnoza"
+            title="Odebranie zlecenia"
             bullet={<IconClipboardCheck size={24} />}
           >
             <Text c="dimmed" size="sm">
-              Dokładnie badamy urządzenie, identyfikujemy usterkę i przedstawiamy 
-              szczegółową wycenę naprawy z rozbiciem na poszczególne pozycje.
+              W momencie przesłania zapytania, nasz system od razu przekazuje informację o nowym zgłoszeniu.
             </Text>
           </Timeline.Item>
 
           <Timeline.Item
-            title="Naprawa"
+            title="Szybka Diagnoza"
+            bullet={<IconClipboardCheck size={24} />}
+          >
+            <Text c="dimmed" size="sm">
+              Dokładnie zbadamy Twój sprzęt, zidentyfikujemy usterkę i przedstawimy Ci jasną wycenę naprawy, krok po kroku.
+            </Text>
+          </Timeline.Item>
+
+          <Timeline.Item
+            title="Profesjonalna Naprawa"
             bullet={<IconTools size={24} />}
           >
             <Text c="dimmed" size="sm">
-              Po akceptacji wyceny, przystępujemy do profesjonalnej naprawy.
+              Po akceptacji kosztów, przystępujemy do naprawy – szybko i skutecznie przywracamy pełną sprawność Twojego urządzenia.
             </Text>
           </Timeline.Item>
 
           <Timeline.Item
-            title="Testy"
+            title="Testy Sprawdzające"
             bullet={<IconChecklist size={24} />}
           >
             <Text c="dimmed" size="sm">
-              Po naprawie przeprowadzamy serię testów, aby upewnić się, 
-              że urządzenie działa poprawnie.
+              Urządzenie przechodzi szereg testów, aby upewnić się, że działa jak nowe – bez żadnych niespodzianek!
             </Text>
           </Timeline.Item>
 
           <Timeline.Item
-            title="Odbiór"
+            title="Gotowe do Odbioru"
             bullet={<IconCircleCheck size={24} />}
           >
             <Text c="dimmed" size="sm">
-              Gotowe urządzenie możesz odebrać osobiście lub zostanie dostarczone pod drzwi.
+              Twoje urządzenie jest gotowe! Możesz je odebrać osobiście lub zostanie Tobie dostarczone.
             </Text>
           </Timeline.Item>
         </Timeline>
