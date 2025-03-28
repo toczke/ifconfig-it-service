@@ -10,8 +10,8 @@ export function Banner() {
         <Stack align="center" gap="xl">
           <div className={classes.logoWrapper}>
             <IfconfigLogo 
-              width={240}
-              height={240}
+              width="100%"
+              height="100%"
               className={classes.logo} 
               theme="auto" 
             />

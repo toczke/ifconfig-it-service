@@ -1,6 +1,6 @@
 .banner {
-  width: 100%;
-  padding: 5rem 0; /* Slightly more padding than before */
+  width: 100vw;
+  padding: 5rem 0;
   background: linear-gradient(
     135deg, 
     rgba(59, 130, 246, 0.95) 0%, 
@@ -11,6 +11,8 @@
   color: white;
   text-align: center;
   margin-top: 60px;
+  margin-left: calc(-50vw + 50%);
+  margin-right: calc(-50vw + 50%);
 }
 
 .banner::before {
@@ -31,6 +33,9 @@
 .container {
   position: relative;
   z-index: 2;
+  max-width: 100%;
+  margin: 0 auto;
+  padding: 0 1rem;
 }
 
 .logoWrapper {
@@ -39,11 +44,11 @@
   justify-content: center;
   align-items: center;
   padding: 0 1rem;
-  margin-bottom: 2rem; /* More space below logo */
+  margin-bottom: 2rem;
 }
 
 .logo {
-  width: 320px; /* Larger than Mantine's 80px */
+  width: 320px;
   height: 240px;
   transition: transform 0.3s ease;
 }
@@ -70,7 +75,7 @@
 
 @media (max-width: 768px) {
   .banner {
-    padding: 4rem 0; /* Still substantial on tablet */
+    padding: 4rem 0;
     margin-top: 50px;
   }
   
@@ -87,23 +92,38 @@
   }
 
   .logo {
-    width: 100px; /* Only slightly smaller on tablet */
-    height: 100px;
+    width: 280px;
+    height: 210px;
   }
 }
 
 @media (max-width: 480px) {
   .banner {
-    padding: 3rem 0;
+    padding: 2rem 0;
     margin-top: 45px;
   }
 
   .benefitItem {
-    font-size: 0.95rem;
+    font-size: 0.9rem;
   }
 
   .logo {
-    width: 90px; /* Still quite visible on mobile */
-    height: 90px;
+    width: 220px;
+    height: 165px;
+  }
+}
+
+@media (max-width: 375px) {
+  .banner {
+    padding: 1.5rem 0;
+  }
+
+  .benefitItem {
+    font-size: 0.85rem;
+  }
+
+  .logo {
+    width: 200px;
+    height: 150px;
   }
 }

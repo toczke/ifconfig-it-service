@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Burger, Container, Group, AppShell, Tooltip, Button, ActionIcon, useMantineColorScheme, Box, Drawer, Stack } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
-import { IconTools, IconPhone, IconCurrencyDollar, IconSun, IconMoon, IconQuestionMark, IconDeviceDesktop } from '@tabler/icons-react';
+import { IconTools, IconMail, IconCurrencyDollar, IconSun, IconMoon, IconQuestionMark, IconDeviceDesktop } from '@tabler/icons-react';
 import IfconfigLogo from './IfconfigLogo';
 import classes from './Header.module.css';
 
@@ -73,6 +73,10 @@ export function Header() {
     </Tooltip>
   ));
 
+  const handleThemeToggle = () => {
+    toggleColorScheme();
+  };
+
   return (
     <AppShell.Header className={classes.header} withBorder={false}>
       <Container size="100%" className={classes.inner}>
@@ -95,24 +99,33 @@ export function Header() {
             {navItems}
           </Group>
 
-          <Group gap="sm" visibleFrom="sm">
+          <Group gap="xl" visibleFrom="sm">
             <Button
-              variant="filled"
-              color="blue"
+              variant="gradient"
+              gradient={{ from: 'teal', to: 'cyan', deg: 45 }}
               radius="xl"
-              leftSection={<IconPhone size={16} />}
+              leftSection={<IconMail size={16} />}
               onClick={() => scrollToSection('kontakt')}
               className={classes.ctaButton}
+              size="sm"
+              h={36}
             >
-              Umów się teraz
+              Napisz do nas
             </Button>
             <ActionIcon
               variant="subtle"
-              color="gray"
-              onClick={toggleColorScheme}
+              onClick={handleThemeToggle}
               aria-label="Toggle theme"
               size="lg"
               className={classes.themeToggle}
+              style={{
+                backgroundColor: colorScheme === 'dark' 
+                  ? 'rgba(255, 255, 0, 0.1)' 
+                  : 'rgba(0, 0, 255, 0.1)',
+                color: colorScheme === 'dark' 
+                  ? 'var(--mantine-color-yellow-4)' 
+                  : 'var(--mantine-color-blue-6)',
+              }}
             >
               {colorScheme === 'dark' ? <IconSun size={20} /> : <IconMoon size={20} />}
             </ActionIcon>
@@ -154,15 +167,17 @@ export function Header() {
             </Button>
           ))}
           <Button
-            variant="filled"
-            color="blue"
+            variant="gradient"
+            gradient={{ from: 'teal', to: 'cyan', deg: 45 }}
             radius="xl"
-            leftSection={<IconPhone size={16} />}
+            leftSection={<IconMail size={16} />}
             onClick={() => scrollToSection('kontakt')}
             className={classes.mobileCtaButton}
+            size="sm"
+            h={36}
             fullWidth
           >
-            Umów się teraz
+            Napisz do nas
           </Button>
           <Button
             variant="default"
