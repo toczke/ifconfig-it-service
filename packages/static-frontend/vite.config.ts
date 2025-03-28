@@ -13,7 +13,7 @@ export default defineConfig({
     port: 4173,
     host: true,
     strictPort: true,
-    allowedHosts: ['serwis-demo.tczke.ovh'], // Only allow this domain
+    allowedHosts: true,
     headers: {
       'Access-Control-Allow-Origin': 'https://serwis-demo.tczke.ovh',
       'X-Frame-Options': 'DENY',
@@ -24,7 +24,7 @@ export default defineConfig({
     port: 5173,
     host: true,
     strictPort: true,
-    allowedHosts: ['serwis-demo.tczke.ovh'], // Only allow this domain for dev server too
+    allowedHosts: true,
     headers: {
       'Access-Control-Allow-Origin': 'https://serwis-demo.tczke.ovh'
     }
