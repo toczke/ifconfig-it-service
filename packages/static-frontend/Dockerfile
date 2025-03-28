@@ -1,18 +1,14 @@
 # Build stage
-FROM node:20-alpine as build
+FROM node:20-alpine as builder
 
 WORKDIR /app
 
-# Copy package files
-COPY package*.json ./
+# Cache dependencies layer
+COPY package.json package-lock.json* ./
+RUN npm ci
 
-# Install dependencies
-RUN npm install
-
-# Copy source code
+# Copy source and build
 COPY . .
-
-# Build the application
 RUN npm run build
 
 # Production stage
@@ -20,15 +16,17 @@ FROM node:20-alpine
 
 WORKDIR /app
 
-# Copy built assets and package files
-COPY --from=build /app/dist ./dist
-COPY --from=build /app/package*.json ./
+# Copy built assets
+COPY --from=builder /app/dist ./dist
 
-# Install production dependencies including Vite
-RUN npm install --omit=dev && \
-    npm install vite@latest
+# Install serve globally
+RUN npm install -g serve
 
-EXPOSE 4173
+# Health check
+HEALTHCHECK --interval=30s --timeout=3s \
+  CMD wget --no-verbose --tries=1 --spider http://localhost:4137 || exit 1
 
-# Only run preview server
-CMD ["npm", "run", "preview", "--", "--host"] 
+EXPOSE 4137
+
+# Serve the dist folder on port 4137
+CMD ["serve", "-s", "dist", "-l", "4137"]
