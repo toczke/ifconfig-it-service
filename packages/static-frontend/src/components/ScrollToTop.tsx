@@ -27,14 +27,16 @@ export function ScrollToTop() {
   if (!isVisible) return null;
 
   return (
-    <Button
-      className={classes.scrollToTop}
-      variant="filled"
-      onClick={scrollToTop}
-      leftSection={<IconArrowUp size={20} />}
-      aria-label="Powrót na górę"
-    >
-      Powrót na górę
-    </Button>
+    <div className={classes.scrollToTopWrapper}>
+      <Button
+        className={classes.scrollToTop}
+        variant="filled"
+        onClick={scrollToTop}
+        leftSection={<IconArrowUp size={20} />}
+        aria-label="Powrót na górę"
+      >
+        Powrót na górę
+      </Button>
+    </div>
   );
 } 

@@ -1,9 +1,15 @@
-.scrollToTop {
+.scrollToTopWrapper {
   position: fixed;
   bottom: 100px;
   right: 24px;
-  left: auto !important;
   z-index: 1000;
+  display: flex;
+  justify-content: flex-end;
+  pointer-events: none;
+}
+
+.scrollToTop {
+  pointer-events: auto;
   background-color: var(--mantine-color-blue-filled) !important;
   color: white !important;
   opacity: 0.9;
@@ -14,8 +20,6 @@
   padding: 8px 16px !important;
   font-size: var(--mantine-font-size-sm) !important;
   font-weight: 500 !important;
-  margin-left: auto !important;
-  transform-origin: right center;
 }
 
 .scrollToTop:hover {
@@ -41,10 +45,12 @@
 }
 
 @media (max-width: 768px) {
-  .scrollToTop {
+  .scrollToTopWrapper {
     bottom: 140px;
     right: 16px;
-    left: auto !important;
+  }
+  
+  .scrollToTop {
     padding: 6px 12px !important;
     font-size: var(--mantine-font-size-xs) !important;
   }
