@@ -11,6 +11,7 @@ import { SampleProjects } from './components/SampleProjects';
 import { CustomerReviews } from './components/CustomerReviews';
 import { Contact } from './components/Contact';
 import { Faq } from './components/Faq';
+import { ScrollToTop } from './components/ScrollToTop';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { RequestStatus } from './components/RequestStatus';
 
@@ -58,6 +59,8 @@ function App() {
           <AppShell.Footer>
             <Footer />
           </AppShell.Footer>
+          
+          <ScrollToTop />
         </AppShell>
       </Router>
     </MantineProvider>

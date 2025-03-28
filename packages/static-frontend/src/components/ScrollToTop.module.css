@@ -1,0 +1,41 @@
+.scrollToTop {
+  position: fixed;
+  bottom: 100px;
+  right: 24px;
+  z-index: 1000;
+  background-color: var(--mantine-color-blue-filled) !important;
+  color: white !important;
+  opacity: 0.9;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  animation: fadeIn 0.3s ease-in-out;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1) !important;
+}
+
+.scrollToTop:hover {
+  opacity: 1;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2) !important;
+}
+
+.scrollToTop:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1) !important;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 0.9;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 768px) {
+  .scrollToTop {
+    bottom: 140px;
+    right: 16px;
+  }
+} 
