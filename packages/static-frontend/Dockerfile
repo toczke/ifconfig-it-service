@@ -3,9 +3,9 @@ FROM node:20-alpine as builder
 
 WORKDIR /app
 
-# Cache dependencies layer - use npm install instead of npm ci
+# Cache dependencies layer
 COPY package.json package-lock.json ./
-RUN npm install --legacy-peer-deps  # More forgiving with peer dependencies
+RUN npm install
 
 # Copy source and build
 COPY . .
@@ -19,10 +19,10 @@ WORKDIR /app
 # Copy built assets
 COPY --from=builder /app/dist ./dist
 
-# Install serve globally
-RUN npm install -g serve
+# Install http-server globally
+RUN npm install -g http-server
 
-EXPOSE 4137
+EXPOSE 3000
 
-# Serve the dist folder on port 4137
-CMD ["serve", "-s", "dist", "-l", "4137"]
+# Serve the dist folder on port 3000 with http-server
+CMD ["http-server", "dist", "-p", "3000", "-d", "false"]
