@@ -12,28 +12,28 @@ export function Faq() {
 
       <Accordion variant="separated" radius="md">
         <Accordion.Item className={classes.item} value="why-me">
-          <Accordion.Control>Dlaczego ifConfig?</Accordion.Control>
+          <Accordion.Control>Dlaczego warto wybrać mój serwis?</Accordion.Control>
           <Accordion.Panel>
             <Text>
-              Od dzieciństwa pasjonuję się komputerami. Mialem dość długi w Intelu, a teraz jestem inżynierem QA. Zawsze staram się oferować jak najlepszą jakość usług, z pełnym zaangażowaniem w każde zlecenie. Moje doświadczenie w IT pozwala mi na oferowanie kompleksowych rozwiązań w sposób profesjonalny i indywidualny.
+              Pracowałem jako inżynier laboratoryjny w dziale wsparcia technicznego, gdzie zdobyłem praktyczną wiedzę o sprzęcie komputerowym. Obecnie rozwijam się jako inżynier QA, co pozwala mi łączyć szczegółowe podejście testerskie z umiejętnościami serwisowymi.
             </Text>
           </Accordion.Panel>
         </Accordion.Item>
 
         <Accordion.Item className={classes.item} value="diagnostics">
-          <Accordion.Control>Ile kosztuje diagnostyka usterki?</Accordion.Control>
+          <Accordion.Control>Ile kosztuje diagnoza problemu?</Accordion.Control>
           <Accordion.Panel>
             <Text>
-              Podstawowa diagnostyka kosztuje 50 zł. Jeśli zdecydujesz się na naprawę u nas, koszt diagnostyki zostanie odliczony od ceny finalnej usługi.
+              Podstawowa diagnoza kosztuje 50 zł. Jeśli zdecydujesz się na naprawę, ta kwota zostanie odliczona od ostatecznego kosztu usługi.
             </Text>
           </Accordion.Panel>
         </Accordion.Item>
 
         <Accordion.Item className={classes.item} value="time">
-          <Accordion.Control>Ile trwa typowa naprawa?</Accordion.Control>
+          <Accordion.Control>Jak długo trwa naprawa?</Accordion.Control>
           <Accordion.Panel>
             <Text>
-              Większość napraw wykonujemy w ciągu 24-48 godzin. Dodatkowy czas może być potrzebny na zdobycie części, jeśli są one potrzebne do naprawy. 
+              Większość napraw wykonuję w ciągu 1-2 dni roboczych. W przypadku konieczności zamówienia części czas może się wydłużyć - zawsze informuję o tym przed rozpoczęciem naprawy.
             </Text>
           </Accordion.Panel>
         </Accordion.Item>
@@ -42,34 +42,36 @@ export function Faq() {
           <Accordion.Control>Czy zapewniacie części zamienne?</Accordion.Control>
           <Accordion.Panel>
             <Text>
-              Nie dysponujemy częściami zamiennymi na miejscu, ale możemy je zorganizować po zaakceptowaniu kosztorysu.
+              Nie posiadam magazynu części, ale zorganizuję ich zakup po przedstawieniu kosztorysu i uzyskaniu Twojej akceptacji.
             </Text>
           </Accordion.Panel>
         </Accordion.Item>
 
         <Accordion.Item className={classes.item} value="payment">
-          <Accordion.Control>Jakie formy płatności akceptujecie?</Accordion.Control>
+          <Accordion.Control>Jakie formy płatności akceptujesz?</Accordion.Control>
           <Accordion.Panel>
             <Text>
-              Akceptujemy płatności gotówką, przelewem tradycyjnym oraz Blikiem.
+              Przyjmuję płatności gotówką, przelewem bankowym oraz przez system BLIK.
             </Text>
           </Accordion.Panel>
         </Accordion.Item>
 
         <Accordion.Item className={classes.item} value="location">
-          <Accordion.Control>Czy odbieracie sprzęt do naprawy?</Accordion.Control>
+          <Accordion.Control>Gdzie odbywa się naprawa sprzętu?</Accordion.Control>
           <Accordion.Panel>
             <Text>
-              Tak, oferujemy odbiór i dostawę sprzętu. Przyjmujemy również sprzęt na miejscu w naszej lokalizacji.
+              Pracuję w domowym warsztacie w Gdańsku. Możesz dostarczyć sprzęt osobiście po wcześniejszym umówieniu się.
             </Text>
           </Accordion.Panel>
         </Accordion.Item>
 
         <Accordion.Item className={classes.item} value="receipt">
-          <Accordion.Control>Czy dostanę paragon?</Accordion.Control>
+          <Accordion.Control>Czy wystawiasz faktury?</Accordion.Control>
           <Accordion.Panel>
             <Text>
-              Świadczymy usługi napraw i serwisu w ramach działalności nierejestrowanej. Wystawiamy rachunki za wykonane usługi. W przypadku zakupu części na życzenie klienta, klient otrzymuje paragon fiskalny bezpośrednio od sprzedawcy części.
+              Świadczę usługi jako działalność nierejestrowana. Na życzenie mogę wystawić rachunek. 
+              Istnieje możliwość wystawienia faktury przez platformę useme, jednak wiąże się to z dodatkową prowizją w wysokości około 10-15% wartości usługi.
+              W przypadku zakupu części, otrzymasz paragon od sprzedawcy.
             </Text>
           </Accordion.Panel>
         </Accordion.Item>

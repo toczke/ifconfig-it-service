@@ -22,37 +22,37 @@ const services = [
   {
     icon: IconCpu,
     title: 'Dobór Procesora',
-    description: 'Optymalny wybór CPU do Twoich potrzeb',
+    description: 'Optymalny wybór CPU dostosowany do Twoich potrzeb.',
     badges: ['Intel', 'AMD']
   },
   {
     icon: BsGpuCard,
     title: 'Karty Graficzne',
-    description: 'Dopasowanie GPU do gier i aplikacji',
+    description: 'Wybór GPU odpowiedni do gier i aplikacji.',
     badges: ['NVIDIA', 'AMD', 'Intel']
   },
   {
     icon: FaMemory,
     title: 'Pamięć RAM',
-    description: 'Konfiguracja pod kątem wydajności',
+    description: 'Optymalna konfiguracja pod kątem wydajności.',
     badges: ['DDR4', 'DDR5']
   },
   {
     icon: BsDeviceSsd,
     title: 'Dyski i SSD',
-    description: 'Optymalne rozwiązania pamięci masowej',
+    description: 'Wybór pamięci masowej zapewniający optymalną wydajność.',
     badges: ['NVMe', 'SATA']
   },
   {
     icon: BsFan,
     title: 'Chłodzenie',
-    description: 'Ciche i efektywne systemy chłodzenia',
+    description: 'Ciche i efektywne systemy chłodzenia, które utrzymują temperaturę w normie.',
     badges: ['Powietrzne', 'Wodne']
   },
   {
     icon: IconKeyboard,
     title: 'Konfiguracja',
-    description: 'Profesjonalny montaż i optymalizacja',
+    description: 'Profesjonalny montaż oraz optymalizacja Twojego komputera.',
     badges: ['OC', 'Testy']
   },
 ];
@@ -100,12 +100,18 @@ export function CustomPC() {
               <IconDeviceDesktop size={26} />
             </ThemeIcon>
             <Title className={classes.title} order={2}>
-              Profesjonalne Składanie PC – Twój Komputer, Twoje Zwycięstwo
+              Profesjonalne Składanie Komputerów – Twój Komputer, Twoje Zwycięstwo
             </Title>
             <Text c="dimmed" className={classes.description}>
-              Chcesz pograć w najnowsze gry, ale nie wiesz, na czym? A może marzysz o prezentach, które zrobią wrażenie? 
-              Nasza kompleksowa usługa obejmuje doradztwo, dobór najlepszych komponentów, profesjonalny montaż i optymalizację komputera, 
-              który będzie idealnie dopasowany do Twoich potrzeb i oczekiwań.
+              Marzysz o nowym komputerze, który pozwoli Ci grać w najnowsze gry w wysokiej jakości? 
+              A może potrzebujesz sprzętu do wymagających aplikacji? Nasza usługa obejmuje doradztwo w doborze komponentów, 
+              montaż i optymalizację, by Twój komputer był idealnie dopasowany do Twoich potrzeb i oczekiwań.
+            </Text>
+            <Text c="dimmed" className={classes.description}>
+              <span style={{ fontWeight: 'bold', color: 'teal' }}>Nie przepłacaj za gotowca!</span> Z nami stworzysz komputer, który naprawdę spełni Twoje wymagania, a nie zapłacisz za markowy komputer, który nie spełnia Twoich potrzeb.
+            </Text>
+            <Text c="dimmed" className={classes.description}>
+              Zaufaj nam i unikaj przepłacania za gotowe komputery. Z naszą pomocą stworzysz system, który naprawdę spełni Twoje wymagania!
             </Text>
             <Button
               variant="outline"
