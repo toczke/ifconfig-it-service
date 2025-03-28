@@ -4,18 +4,12 @@ services:
   frontend:
     container_name: it-service-frontend
     build:
-      context: ./packages/static-frontend  # Correct path
+      context: ./packages/static-frontend
       dockerfile: Dockerfile
     ports:
       - "4173:4173"
     volumes:
-      - frontend-node-modules:/app/node_modules
-    environment:
-      - NODE_ENV=production
-    env_file:
-      - .env
-    depends_on:
-      - bot
+      - ./packages/static-frontend/.env:/app/.env
     networks:
       - it-service-network
     restart: unless-stopped
@@ -28,12 +22,7 @@ services:
     ports:
       - "3001:3001"
     volumes:
-      - bot-node-modules:/app/node_modules
-      - bot-uploads:/app/uploads
-    environment:
-      - NODE_ENV=production
-    env_file:
-      - .env
+      - ./packages/discord-bot/.env:/app/.env
     networks:
       - it-service-network
     restart: unless-stopped
@@ -41,8 +30,3 @@ services:
 networks:
   it-service-network:
     driver: bridge
-
-volumes:
-  frontend-node-modules:
-  bot-node-modules:
-  bot-uploads:

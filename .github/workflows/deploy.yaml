@@ -1,4 +1,4 @@
-name: Deploy IT Service Containers
+name: Deploy IT Service
 
 on:
   workflow_dispatch:
@@ -9,17 +9,13 @@ on:
         default: 'main'
         type: string
 
-env:
-  FRONTEND_PORT: 8080
-  BOT_PORT: 3001
-
 jobs:
   cleanup:
     runs-on: self-hosted
     steps:
       - name: Cleanup old containers
         run: |
-          echo "${{ secrets.SUDO_PASSWORD }}" | sudo -S docker compose -f docker-compose.yml down || true
+          echo "${{ secrets.SUDO_PASSWORD }}" | sudo -S docker compose down -v || true
           echo "${{ secrets.SUDO_PASSWORD }}" | sudo -S docker system prune -a -f
 
   checkout:
@@ -30,45 +26,42 @@ jobs:
         uses: actions/checkout@v4
         with:
           ref: ${{ github.event.inputs.branch }}
-          fetch-depth: 0
 
-  deploy:
+  setup-env:
     runs-on: self-hosted
     needs: checkout
     steps:
-      - name: Verify directory structure
+      - name: Create bot .env
         run: |
-          echo "Repository contents:"
-          ls -la
-          echo "Packages directory:"
-          ls -la packages/
-          echo "Frontend directory:"
-          ls -la packages/static-frontend/
-          echo "Bot directory:"
-          ls -la packages/discord-bot/
-
-      - name: Create production .env
-        run: |
-          cat <<EOF > .env
-          # Discord Bot
+          mkdir -p packages/discord-bot
+          cat <<EOF > packages/discord-bot/.env
           DISCORD_TOKEN=${{ secrets.DISCORD_TOKEN }}
-          CHANNELS_NEW_REQUESTS=${{ secrets.CHANNELS_NEW_REQUESTS }}
-          CHANNELS_IN_PROGRESS=${{ secrets.CHANNELS_IN_PROGRESS }}
-          CHANNELS_DONE=${{ secrets.CHANNELS_DONE }}
-          CHANNELS_REJECTED=${{ secrets.CHANNELS_REJECTED }}
-          FRONTEND_URL=http://localhost:${{ env.FRONTEND_PORT }}
-          
-          # Frontend
-          VITE_BOT_API_URL=http://localhost:${{ env.BOT_PORT }}
-          NODE_ENV=production
+          NEW_REQUESTS_CHANNEL_ID=${{ secrets.NEW_REQUESTS_CHANNEL_ID }}
+          IN_PROGRESS_CHANNEL_ID=${{ secrets.IN_PROGRESS_CHANNEL_ID }}
+          DONE_CHANNEL_ID=${{ secrets.DONE_CHANNEL_ID }}
+          REJECTED_CHANNEL_ID=${{ secrets.REJECTED_CHANNEL_ID }}
+          FRONTEND_URL=http://frontend:4173
+          PORT=3001
           EOF
 
-      - name: Build and deploy containers
+      - name: Create frontend .env
         run: |
-          echo "${{ secrets.SUDO_PASSWORD }}" | sudo -S docker compose -f docker-compose.yml up -d --build
+          mkdir -p packages/static-frontend
+          cat <<EOF > packages/static-frontend/.env
+          VITE_DISCORD_WEBHOOK_URL=${{ secrets.VITE_DISCORD_WEBHOOK_URL }}
+          VITE_BOT_SERVER_URL=http://bot:3001
+          EOF
 
-      - name: Verify deployment
+  deploy:
+    runs-on: self-hosted
+    needs: setup-env
+    steps:
+      - name: Build and deploy
+        run: |
+          echo "${{ secrets.SUDO_PASSWORD }}" | sudo -S docker compose up -d --build
+
+      - name: Verify services
         run: |
           echo "${{ secrets.SUDO_PASSWORD }}" | sudo -S docker ps
-          echo "Frontend should be available on port ${{ env.FRONTEND_PORT }}"
-          echo "Bot should be available on port ${{ env.BOT_PORT }}"
+          echo "Frontend running on port 4173"
+          echo "Bot running on port 3001"
