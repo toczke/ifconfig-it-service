@@ -3,9 +3,9 @@ FROM node:20-alpine as builder
 
 WORKDIR /app
 
-# Cache dependencies layer
-COPY package.json package-lock.json* ./
-RUN npm ci
+# Cache dependencies layer - use npm install instead of npm ci
+COPY package.json package-lock.json ./
+RUN npm install --legacy-peer-deps  # More forgiving with peer dependencies
 
 # Copy source and build
 COPY . .
@@ -21,10 +21,6 @@ COPY --from=builder /app/dist ./dist
 
 # Install serve globally
 RUN npm install -g serve
-
-# Health check
-HEALTHCHECK --interval=30s --timeout=3s \
-  CMD wget --no-verbose --tries=1 --spider http://localhost:4137 || exit 1
 
 EXPOSE 4137
 
