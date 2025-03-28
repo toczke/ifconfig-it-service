@@ -89,11 +89,24 @@ const CHANNELS = {
 const REACTIONS = {
   IN_PROGRESS: '⚙️',
   REJECTED: '❌',
-  DONE: '✅'
+  DONE: '✅',
+  TAG_TOCZKE: '👋'
 };
 
 // Store rejected message timestamps for auto-deletion
 const rejectedMessages = new Map<string, number>();
+
+// Function to tag Toczke in a message
+async function tagToczke(message: Message) {
+  try {
+    const toczkeUser = await message.guild?.members.fetch('Toczke');
+    if (toczkeUser) {
+      await message.reply(`<@${toczkeUser.id}>`);
+    }
+  } catch (error) {
+    console.error('Error tagging Toczke:', error);
+  }
+}
 
 // Auto-delete rejected messages after 7 days
 setInterval(async () => {
@@ -145,14 +158,74 @@ client.on(Events.MessageCreate, async (message: Message) => {
     attachments: message.attachments.size
   });
 
-  if (message.channelId !== CHANNELS.NEW_REQUESTS) {
-    console.log('Message not in target channel, ignoring');
+  // Handle messages in any service channel
+  if (![CHANNELS.NEW_REQUESTS, CHANNELS.IN_PROGRESS, CHANNELS.DONE, CHANNELS.REJECTED].includes(message.channelId)) {
+    console.log('Message not in service channel, ignoring');
     return;
   }
   
-  // Skip if the message is from a bot (except webhooks)
-  if (message.author?.bot && !message.webhookId) {
-    console.log('Message from bot (not webhook), ignoring');
+  // Skip if the message is from the bot itself
+  if (message.author?.id === client.user?.id) {
+    console.log('Message from bot itself, ignoring');
+    return;
+  }
+
+  // Handle clear channel command
+  if (message.content === '!clear') {
+    try {
+      // Check if user has admin permissions
+      const member = message.member;
+      if (!member?.permissions.has('Administrator')) {
+        await message.reply('❌ You need Administrator permissions to use this command.');
+        return;
+      }
+
+      // Send confirmation message
+      const confirmMessage = await message.reply('⚠️ Are you sure you want to clear this channel? React with ✅ to confirm or ❌ to cancel.');
+      await confirmMessage.react('✅');
+      await confirmMessage.react('❌');
+
+      // Create a filter for reactions
+      const filter = (reaction: MessageReaction, user: User) => {
+        return ['✅', '❌'].includes(reaction.emoji.name || '') && user.id === message.author.id;
+      };
+
+      // Wait for user's reaction
+      const collected = await confirmMessage.awaitReactions({
+        filter,
+        max: 1,
+        time: 30000, // 30 seconds timeout
+        errors: ['time']
+      });
+
+      const reaction = collected.first();
+      if (reaction?.emoji.name === '✅') {
+        // Delete confirmation message
+        await confirmMessage.delete();
+        
+        // Send progress message
+        const channel = message.channel as TextChannel;
+        const progressMessage = await channel.send('🧹 Clearing channel...');
+        
+        // Delete all messages in the channel
+        let messages = await channel.messages.fetch();
+        while (messages.size > 0) {
+          await Promise.all(messages.map(msg => msg.delete().catch(console.error)));
+          messages = await channel.messages.fetch();
+        }
+        
+        // Delete progress message
+        await progressMessage.delete();
+        
+        // Send completion message
+        await channel.send('✨ Channel cleared successfully!');
+      } else {
+        await confirmMessage.edit('Channel clear cancelled.');
+      }
+    } catch (error) {
+      console.error('Error clearing channel:', error);
+      await message.reply('❌ An error occurred while clearing the channel.');
+    }
     return;
   }
 
@@ -196,42 +269,7 @@ client.on(Events.MessageCreate, async (message: Message) => {
         }
       } else if (message.content) {
         // If the message has text content, use that
-        const lines = message.content.split('\n');
-        let currentSection = '';
-        
-        for (const line of lines) {
-          const trimmedLine = line.trim();
-          if (!trimmedLine) continue;
-
-          // Skip timestamp line
-          if (trimmedLine.startsWith('Dziś o')) continue;
-
-          // Check if this is a section header
-          if (trimmedLine === 'Imię' || 
-              trimmedLine === 'Email' || 
-              trimmedLine === 'Telefon' || 
-              trimmedLine === 'Typ usługi' || 
-              trimmedLine === 'Model urządzenia' || 
-              trimmedLine === 'Wiadomość') {
-            currentSection = trimmedLine;
-            formattedContent += `\n**${currentSection}**\n`;
-          } else {
-            // This is a value line
-            if (currentSection === 'Typ usługi') {
-              serviceType = trimmedLine;
-            }
-            formattedContent += trimmedLine + '\n';
-          }
-        }
-      }
-
-      // Handle attachments from the message
-      if (message.attachments.size > 0) {
-        const attachmentArray = Array.from(message.attachments.values());
-        attachments = attachmentArray.map(att => ({
-          attachment: att.url,
-          name: att.name
-        }));
+        formattedContent = message.content;
       }
 
       // Set the title based on service type
@@ -264,7 +302,6 @@ client.on(Events.MessageCreate, async (message: Message) => {
         embed.setDescription(formattedContent.trim());
       } else {
         console.error('No content found in webhook message');
-        // Set a default description if no content is found
         embed.setDescription('Brak szczegółów zlecenia');
       }
 
@@ -275,7 +312,26 @@ client.on(Events.MessageCreate, async (message: Message) => {
       // Send the formatted message with attachments
       console.log('Sending formatted message');
       const channel = message.channel as TextChannel;
+      
+      // Fetch the Toczke user
+      const guild = message.guild;
+      if (!guild) {
+        console.error('No guild found for the message');
+        return;
+      }
+
+      // Find the Toczke user in the guild
+      const toczkeMember = guild.members.cache.find(member => 
+        member.user.username.toLowerCase() === 'toczke'
+      );
+
+      if (!toczkeMember) {
+        console.error('Could not find Toczke user in the guild');
+        return;
+      }
+
       const formattedMessage = await channel.send({ 
+        content: `<@${toczkeMember.id}>`,  // Proper mention using user ID
         embeds: [embed],
         files: attachments
       });
@@ -294,18 +350,20 @@ client.on(Events.MessageCreate, async (message: Message) => {
 
       const channel = message.channel as TextChannel;
       const formattedMessage = await channel.send({ embeds: [embed] });
-      await formattedMessage.react(REACTIONS.IN_PROGRESS);
-      await formattedMessage.react(REACTIONS.REJECTED);
+      
+      // Add appropriate reactions based on the channel
+      if (message.channelId === CHANNELS.NEW_REQUESTS) {
+        await formattedMessage.react(REACTIONS.IN_PROGRESS);
+        await formattedMessage.react(REACTIONS.REJECTED);
+      } else if (message.channelId === CHANNELS.IN_PROGRESS) {
+        await formattedMessage.react(REACTIONS.DONE);
+      }
+
+      // Delete the original message
+      await message.delete().catch(console.error);
     }
   } catch (error) {
     console.error('Error processing message:', error);
-    // Try to send an error message to the channel
-    try {
-      const channel = message.channel as TextChannel;
-      await channel.send('Sorry, there was an error processing this request. Please try again later.');
-    } catch (sendError) {
-      console.error('Error sending error message:', sendError);
-    }
   }
 
   // Test command
@@ -372,8 +430,9 @@ client.on(Events.MessageReactionAdd, async (reaction: MessageReaction | PartialM
     isBot: user.bot
   });
 
-  if (user.bot) {
-    console.log('Reaction from bot, ignoring');
+  // Skip if the reaction is from the bot itself
+  if (user.id === client.user?.id) {
+    console.log('Reaction from bot itself, ignoring');
     return;
   }
 
@@ -382,18 +441,13 @@ client.on(Events.MessageReactionAdd, async (reaction: MessageReaction | PartialM
     const message = reaction.message.partial ? await reaction.message.fetch() : reaction.message;
     const channel = message.channel as TextChannel;
 
-    // Handle reactions only in the new requests, in progress, and rejected channels
-    if (channel.id !== CHANNELS.NEW_REQUESTS && 
-        channel.id !== CHANNELS.IN_PROGRESS && 
-        channel.id !== CHANNELS.REJECTED) {
-      console.log('Reaction not in target channel, ignoring');
+    // Handle reactions only in service channels
+    if (![CHANNELS.NEW_REQUESTS, CHANNELS.IN_PROGRESS, CHANNELS.DONE, CHANNELS.REJECTED].includes(channel.id)) {
+      console.log('Reaction not in service channel, ignoring');
       return;
     }
 
-    console.log('Processing reaction in target channel');
-
-    // Remove all reactions from the message
-    await message.reactions.removeAll();
+    console.log('Processing reaction in service channel');
 
     // Get the original embed
     const originalEmbed = message.embeds[0];
@@ -459,6 +513,10 @@ client.on(Events.MessageReactionAdd, async (reaction: MessageReaction | PartialM
         rejectedMessages.delete(message.id);
       }
     }
+
+    if (reaction.emoji.name === REACTIONS.TAG_TOCZKE) {
+      await tagToczke(message);
+    }
   } catch (error) {
     console.error('Error processing reaction:', error);
   }
@@ -481,6 +539,10 @@ client.on(Events.ThreadCreate, async (thread: ThreadChannel) => {
     const originalEmbed = parentMessage.embeds[0];
     if (!originalEmbed) return;
 
+    // Get the first message in the thread
+    const firstThreadMessage = await thread.messages.fetch().then(messages => messages.first());
+    const serviceNote = firstThreadMessage ? firstThreadMessage.content : '';
+
     // Create new embed with service note
     const embed = new EmbedBuilder()
       .setTitle(originalEmbed.title || 'Service Request')
@@ -493,11 +555,28 @@ client.on(Events.ThreadCreate, async (thread: ThreadChannel) => {
       embed.addFields(originalEmbed.fields);
     }
 
-    // Add service note field
-    embed.addFields({ 
-      name: '📝 Notatka serwisu', 
-      value: `[Otwórz wątek](${thread.url})` 
+    // Add service note field with timestamp
+    const currentTime = new Date().toLocaleString('pl-PL', {
+      day: '2-digit',
+      month: '2-digit',
+      year: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit'
     });
+
+    // Update or add service note field
+    const serviceNoteField = originalEmbed.fields?.find((field: { name: string }) => field.name === '📝 Notatka serwisu');
+    if (serviceNoteField) {
+      embed.spliceFields(0, 1, { 
+        name: '📝 Notatka serwisu', 
+        value: `${serviceNote}\nUtworzono: ${currentTime}` 
+      });
+    } else {
+      embed.addFields({ 
+        name: '📝 Notatka serwisu', 
+        value: `${serviceNote}\nUtworzono: ${currentTime}` 
+      });
+    }
 
     // Update the parent message
     await parentMessage.edit({ embeds: [embed] });
@@ -623,6 +702,7 @@ ${process.env.FRONTEND_URL}/job/${requestId}`;
     if (req.file) {
       console.log('Sending message with photo');
       formattedMessage = await channel.send({ 
+        content: '@everyone',  // Tag everyone in the channel
         embeds: [embed],
         files: [{
           attachment: req.file.path,
