@@ -9,6 +9,10 @@
   transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
   animation: fadeIn 0.3s ease-in-out;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1) !important;
+  border-radius: var(--mantine-radius-md) !important;
+  padding: 8px 16px !important;
+  font-size: var(--mantine-font-size-sm) !important;
+  font-weight: 500 !important;
 }
 
 .scrollToTop:hover {
@@ -37,5 +41,7 @@
   .scrollToTop {
     bottom: 140px;
     right: 16px;
+    padding: 6px 12px !important;
+    font-size: var(--mantine-font-size-xs) !important;
   }
 } 

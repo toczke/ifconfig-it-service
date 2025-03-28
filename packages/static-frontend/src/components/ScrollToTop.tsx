@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { ActionIcon } from '@mantine/core';
+import { Button } from '@mantine/core';
 import { IconArrowUp } from '@tabler/icons-react';
 import classes from './ScrollToTop.module.css';
 
@@ -27,15 +27,14 @@ export function ScrollToTop() {
   if (!isVisible) return null;
 
   return (
-    <ActionIcon
+    <Button
       className={classes.scrollToTop}
       variant="filled"
-      size={48}
-      radius="md"
       onClick={scrollToTop}
-      aria-label="Przewiń do góry"
+      leftSection={<IconArrowUp size={20} />}
+      aria-label="Powrót na górę"
     >
-      <IconArrowUp size={24} />
-    </ActionIcon>
+      Powrót na górę
+    </Button>
   );
 } 
