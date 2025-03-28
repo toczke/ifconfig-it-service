@@ -1,0 +1,76 @@
+name: Deploy IT Service
+
+on:
+  workflow_dispatch:
+    inputs:
+      branch:
+        description: 'Branch to deploy'
+        required: true
+        default: 'main'
+        type: string
+
+env:
+  FRONTEND_PORT: 8080
+  BOT_PORT: 3001
+
+jobs:
+  pre-cleanup:
+    runs-on: self-hosted
+    steps:
+      - name: "Pre-Cleanup: Check if Repository Exists and Remove"
+        run: |
+          if [ -d "${{ github.event.repository.name }}" ]; then
+            echo "Repository exists. Cleaning up before new deployment..."
+            echo "${{ secrets.SUDO_PASSWORD }}" | sudo -S rm -rf ${{ github.event.repository.name }}
+            echo "Repository cleanup complete."
+          else
+            echo "Repository does not exist. No pre-cleanup needed."
+          fi
+
+      - name: Stop and Remove Docker Containers
+        run: |
+          echo "Stopping and removing Docker containers..."
+          echo "${{ secrets.SUDO_PASSWORD }}" | sudo -S docker compose -f docker-compose.yml down || true
+          echo "Docker containers removed."
+
+      - name: Remove All Docker Images
+        run: |
+          echo "Removing all Docker images..."
+          echo "${{ secrets.SUDO_PASSWORD }}" | sudo -S docker image prune -a -f
+          echo "All Docker images removed."
+
+  checkout:
+    runs-on: self-hosted
+    needs: pre-cleanup
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.inputs.branch }}
+
+  build-and-deploy:
+    runs-on: self-hosted
+    needs: checkout
+    steps:
+      - name: Create .env file
+        run: |
+          cat <<EOF > .env
+          # Discord Bot Configuration
+          DISCORD_TOKEN=${{ secrets.DISCORD_TOKEN }}
+          CHANNELS_NEW_REQUESTS=${{ secrets.CHANNELS_NEW_REQUESTS }}
+          CHANNELS_IN_PROGRESS=${{ secrets.CHANNELS_IN_PROGRESS }}
+          CHANNELS_DONE=${{ secrets.CHANNELS_DONE }}
+          CHANNELS_REJECTED=${{ secrets.CHANNELS_REJECTED }}
+          FRONTEND_URL=http://localhost:${{ env.FRONTEND_PORT }}
+
+          # Frontend Configuration
+          VITE_BOT_API_URL=http://localhost:${{ env.BOT_PORT }}
+          EOF
+
+      - name: Build and deploy Docker containers
+        run: |
+          echo "${{ secrets.SUDO_PASSWORD }}" | sudo -S docker compose -f docker-compose.yml up -d --build
+
+      - name: Verify containers are running
+        run: |
+          echo "${{ secrets.SUDO_PASSWORD }}" | sudo -S docker ps
