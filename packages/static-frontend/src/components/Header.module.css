@@ -105,6 +105,26 @@
 
 .logoContainer {
   margin-right: var(--mantine-spacing-md);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  transform: none !important;
+  transition: none !important;
+}
+
+.logoContainer:hover {
+  transform: none !important;
+}
+
+.logo {
+  height: 32px;
+  width: auto;
+  transform: none !important;
+  transition: none !important;
+}
+
+.logo:hover {
+  transform: none !important;
 }
 
 /* Mobile styles */
@@ -133,13 +153,6 @@
 
 [data-mantine-color-scheme='dark'] .theme-button {
   color: var(--mantine-color-gray-0);
-}
-
-.logo {
-  height: 32px;
-  width: auto;
-  transition: transform 0.2s ease;
-  cursor: pointer;
 }
 
 .mobileLink {

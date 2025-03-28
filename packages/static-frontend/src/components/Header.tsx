@@ -83,7 +83,7 @@ export function Header() {
               setActive(null);
             }}
             className={classes.logoContainer}
-            style={{ display: 'flex', alignItems: 'center' }}
+            style={{ display: 'flex', alignItems: 'center', transform: 'none' }}
           >
             <IfconfigLogo className={classes.logo} />
           </Box>
