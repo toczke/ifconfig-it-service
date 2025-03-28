@@ -2,6 +2,7 @@
   position: fixed;
   bottom: 100px;
   right: 24px;
+  left: auto !important;
   z-index: 1000;
   background-color: var(--mantine-color-blue-filled) !important;
   color: white !important;
@@ -13,6 +14,8 @@
   padding: 8px 16px !important;
   font-size: var(--mantine-font-size-sm) !important;
   font-weight: 500 !important;
+  margin-left: auto !important;
+  transform-origin: right center;
 }
 
 .scrollToTop:hover {
@@ -41,6 +44,7 @@
   .scrollToTop {
     bottom: 140px;
     right: 16px;
+    left: auto !important;
     padding: 6px 12px !important;
     font-size: var(--mantine-font-size-xs) !important;
   }
