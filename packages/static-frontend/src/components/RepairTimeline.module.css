@@ -1,4 +1,9 @@
 .wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* Vertical centering */
+  align-items: center; /* Horizontal centering */
+  min-height: 100vh; /* Ensure full viewport height */
   padding: var(--mantine-spacing-xl) 0;
 }
 
@@ -11,7 +16,7 @@
   font-size: var(--mantine-font-size-xl);
   font-weight: 900;
   margin-bottom: var(--mantine-spacing-md);
-  
+
   @media (max-width: 768px) {
     font-size: var(--mantine-font-size-lg);
   }
@@ -20,7 +25,8 @@
 .description {
   color: var(--mantine-color-dimmed);
   max-width: 600px;
-  margin: 0 auto;
+  margin: 0 auto; /* Horizontally center */
+  text-align: center; /* Ensure text is centered */
 }
 
 .timelineWrapper {
@@ -36,12 +42,14 @@
 }
 
 .item {
+  display: flex; /* Ensure flex layout */
+  align-items: center; /* Vertically align icon and content */
   padding-top: var(--mantine-spacing-xl);
-  align-items: flex-start;
 }
 
 .itemBody {
-  padding-left: var(--mantine-spacing-md);
+  padding-left: var(--mantine-spacing-lg); /* Increase padding for better alignment */
+  flex: 1; /* Ensure the body takes up remaining space */
 }
 
 .itemTitle {
@@ -55,9 +63,12 @@
 
 .itemBullet {
   display: flex;
-  align-items: center;
+  align-items: center; /* Ensure icon is centered */
   justify-content: center;
   border: 2px solid var(--mantine-color-blue-6);
+  flex-shrink: 0; /* Prevent the bullet from shrinking */
+  height: 48px; /* Ensure uniform bullet size */
+  width: 48px; /* Ensure uniform bullet size */
 }
 
 .itemBullet[data-active] {
@@ -81,5 +92,9 @@
   
   .itemContent {
     padding-bottom: var(--mantine-spacing-lg);
+  }
+  
+  .itemBody {
+    padding-left: var(--mantine-spacing-md);
   }
 }

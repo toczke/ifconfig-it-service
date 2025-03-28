@@ -22,11 +22,11 @@ export function RepairTimeline() {
       const windowHeight = window.innerHeight;
       
       // Calculate visibility (0 when top at screen bottom, 1 when bottom at screen top)
-      const visibility = 1 - (bottom / (windowHeight + height * 0.5)); // Changed to height * 0.5 to complete earlier
+      const visibility = 1 - (bottom / (windowHeight + height * 1));
       const progress = Math.min(Math.max(visibility, 0), 1);
       
       // Map to timeline items (6 items) with faster progression
-      const newActiveIndex = Math.floor(progress * 5 * 1.5); // Added multiplier to complete faster
+      const newActiveIndex = Math.floor(progress * 5 * 10);
       setActiveIndex(Math.min(newActiveIndex, 5));
     };
   
