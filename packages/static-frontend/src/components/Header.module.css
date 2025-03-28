@@ -1,9 +1,12 @@
 .header {
   background-color: var(--mantine-color-dark-7);
-  border-bottom: 1px solid var(--mantine-color-dark-5);
   position: sticky;
   top: 0;
   z-index: 100;
+}
+
+[data-mantine-color-scheme='dark'] .header {
+  border-bottom: 1px solid var(--mantine-color-dark-5);
 }
 
 .inner {
@@ -16,17 +19,36 @@
 .link {
   display: flex;
   align-items: center;
-  gap: 8px;
-  padding: 8px 12px;
-  border-radius: var(--mantine-radius-sm);
+  gap: 12px;
+  padding: 12px 32px;
+  margin: 0 6px;
+  border-radius: var(--mantine-radius-md);
   color: var(--mantine-color-gray-7);
   text-decoration: none;
-  transition: all 0.2s ease;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  background: transparent;
+  cursor: pointer;
+  height: 48px;
+  font-size: var(--mantine-font-size-sm);
+  min-width: 140px;
+  justify-content: center;
+  font-weight: 500;
 }
 
 .link:hover {
   background-color: var(--mantine-color-blue-1);
   color: var(--mantine-color-blue-7);
+  text-decoration: none;
+  transform: translateY(-1px);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.link:active {
+  transform: translateY(0);
+  box-shadow: none;
 }
 
 [data-mantine-color-scheme='dark'] .link {
@@ -36,6 +58,45 @@
 [data-mantine-color-scheme='dark'] .link:hover {
   background-color: var(--mantine-color-dark-5);
   color: var(--mantine-color-white);
+  text-decoration: none;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.ctaButton {
+  height: 48px !important;
+  padding: 12px 32px !important;
+  margin: 0 6px !important;
+  border-radius: var(--mantine-radius-md) !important;
+  font-weight: 500 !important;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  min-width: 140px !important;
+}
+
+.ctaButton:hover {
+  transform: translateY(-1px) !important;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1) !important;
+}
+
+.ctaButton:active {
+  transform: translateY(0) !important;
+  box-shadow: none !important;
+}
+
+.themeToggle {
+  height: 48px !important;
+  width: 48px !important;
+  border-radius: var(--mantine-radius-md) !important;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+.themeToggle:hover {
+  transform: translateY(-1px) !important;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1) !important;
+}
+
+.themeToggle:active {
+  transform: translateY(0) !important;
+  box-shadow: none !important;
 }
 
 .linkText {

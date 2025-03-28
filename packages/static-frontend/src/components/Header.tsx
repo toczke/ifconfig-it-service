@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Burger, Container, Group, AppShell, Tooltip, Button, ActionIcon, useMantineColorScheme, Box, Drawer, Stack } from '@mantine/core';
+import { Burger, Container, Group, AppShell, Tooltip, Button, ActionIcon, useMantineColorScheme, Box, Drawer, Stack, UnstyledButton } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import { IconTools, IconMail, IconCurrencyDollar, IconSun, IconMoon, IconQuestionMark, IconDeviceDesktop } from '@tabler/icons-react';
 import IfconfigLogo from './IfconfigLogo';
@@ -55,22 +55,15 @@ export function Header() {
   };
 
   const navItems = services.map((service) => (
-    <Tooltip label={service.label} key={service.id} position="bottom" withArrow>
-      <Box
-        component="a"
-        href={`#${service.id}`}
-        className={classes.link}
-        data-active={active === service.id || undefined}
-        onClick={(e) => {
-          e.preventDefault();
-          scrollToSection(service.id);
-        }}
-        aria-label={service.label}
-      >
-        {service.icon}
-        <span className={classes.linkText}>{service.label}</span>
-      </Box>
-    </Tooltip>
+    <UnstyledButton
+      key={service.id}
+      className={classes.link}
+      data-active={active === service.id || undefined}
+      onClick={() => scrollToSection(service.id)}
+    >
+      {service.icon}
+      <span className={classes.linkText}>{service.label}</span>
+    </UnstyledButton>
   ));
 
   const handleThemeToggle = () => {
@@ -103,32 +96,35 @@ export function Header() {
             <Button
               variant="gradient"
               gradient={{ from: 'teal', to: 'cyan', deg: 45 }}
-              radius="xl"
               leftSection={<IconMail size={16} />}
               onClick={() => scrollToSection('kontakt')}
               className={classes.ctaButton}
               size="sm"
-              h={36}
             >
               Napisz do nas
             </Button>
-            <ActionIcon
-              variant="subtle"
-              onClick={handleThemeToggle}
-              aria-label="Toggle theme"
-              size="lg"
-              className={classes.themeToggle}
-              style={{
-                backgroundColor: colorScheme === 'dark' 
-                  ? 'rgba(255, 255, 0, 0.1)' 
-                  : 'rgba(0, 0, 255, 0.1)',
-                color: colorScheme === 'dark' 
-                  ? 'var(--mantine-color-yellow-4)' 
-                  : 'var(--mantine-color-blue-6)',
-              }}
+            <Tooltip 
+              label={colorScheme === 'dark' ? 'Tryb jasny' : 'Tryb ciemny'} 
+              position="bottom" 
+              withArrow
             >
-              {colorScheme === 'dark' ? <IconSun size={20} /> : <IconMoon size={20} />}
-            </ActionIcon>
+              <ActionIcon
+                variant="subtle"
+                onClick={handleThemeToggle}
+                aria-label="Toggle theme"
+                className={classes.themeToggle}
+                style={{
+                  backgroundColor: colorScheme === 'dark' 
+                    ? 'rgba(255, 255, 0, 0.1)' 
+                    : 'rgba(0, 0, 255, 0.1)',
+                  color: colorScheme === 'dark' 
+                    ? 'var(--mantine-color-yellow-4)' 
+                    : 'var(--mantine-color-blue-6)',
+                }}
+              >
+                {colorScheme === 'dark' ? <IconSun size={24} /> : <IconMoon size={24} />}
+              </ActionIcon>
+            </Tooltip>
           </Group>
 
           <Burger
@@ -169,7 +165,6 @@ export function Header() {
           <Button
             variant="gradient"
             gradient={{ from: 'teal', to: 'cyan', deg: 45 }}
-            radius="xl"
             leftSection={<IconMail size={16} />}
             onClick={() => scrollToSection('kontakt')}
             className={classes.mobileCtaButton}
