@@ -21,6 +21,16 @@ html, body, #root {
   font-size: 16px; /* Base font size for better mobile readability */
 }
 
+body {
+  position: relative;
+  overflow-x: hidden;
+}
+
+#root {
+  position: relative;
+  overflow-x: hidden;
+}
+
 /* Layout Styles */
 .main-content {
   width: 100%;

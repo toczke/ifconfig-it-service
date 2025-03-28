@@ -30,12 +30,13 @@ function App() {
           
           <AppShell.Main
             style={{
-              width: "100vw",
+              width: "100%",
               maxWidth: "100%", 
               margin: "0", 
               padding: "0", 
               minHeight: "calc(100vh - 140px)",
-              paddingBottom: "100px"
+              paddingBottom: "100px",
+              overflowX: "hidden"
             }}
           >
             <Routes>
