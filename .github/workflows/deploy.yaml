@@ -1,4 +1,4 @@
-name: Deploy IT Service
+name: Deploy IT Service Containers
 
 on:
   workflow_dispatch:
@@ -10,75 +10,65 @@ on:
         type: string
 
 env:
-  FRONTEND_PORT: 4173
+  FRONTEND_PORT: 8080
   BOT_PORT: 3001
 
 jobs:
-  pre-cleanup:
+  cleanup:
     runs-on: self-hosted
     steps:
-      - name: "Pre-Cleanup: Check if Repository Exists and Remove"
+      - name: Cleanup old containers
         run: |
-          if [ -d "${{ github.event.repository.name }}" ]; then
-            echo "Repository exists. Cleaning up before new deployment..."
-            echo "${{ secrets.SUDO_PASSWORD }}" | sudo -S rm -rf ${{ github.event.repository.name }}
-            echo "Repository cleanup complete."
-          else
-            echo "Repository does not exist. No pre-cleanup needed."
-          fi
-
-      - name: Stop and Remove Docker Containers
-        run: |
-          echo "Stopping and removing Docker containers..."
           echo "${{ secrets.SUDO_PASSWORD }}" | sudo -S docker compose -f docker-compose.yml down || true
-          echo "Docker containers removed."
-
-      - name: Remove All Docker Images
-        run: |
-          echo "Removing all Docker images..."
-          echo "${{ secrets.SUDO_PASSWORD }}" | sudo -S docker image prune -a -f
-          echo "All Docker images removed."
+          echo "${{ secrets.SUDO_PASSWORD }}" | sudo -S docker system prune -a -f
 
   checkout:
     runs-on: self-hosted
-    needs: pre-cleanup
+    needs: cleanup
     steps:
-      - name: Checkout Code
+      - name: Checkout code
         uses: actions/checkout@v4
         with:
           ref: ${{ github.event.inputs.branch }}
+          fetch-depth: 0
 
-  build-and-deploy:
+  deploy:
     runs-on: self-hosted
     needs: checkout
     steps:
       - name: Verify directory structure
         run: |
+          echo "Repository contents:"
           ls -la
+          echo "Packages directory:"
           ls -la packages/
-          ls -la packages/frontend
-          ls -la packages/discord-bot
+          echo "Frontend directory:"
+          ls -la packages/static-frontend/
+          echo "Bot directory:"
+          ls -la packages/discord-bot/
 
-      - name: Create .env file
+      - name: Create production .env
         run: |
           cat <<EOF > .env
-          # Discord Bot Configuration
+          # Discord Bot
           DISCORD_TOKEN=${{ secrets.DISCORD_TOKEN }}
           CHANNELS_NEW_REQUESTS=${{ secrets.CHANNELS_NEW_REQUESTS }}
           CHANNELS_IN_PROGRESS=${{ secrets.CHANNELS_IN_PROGRESS }}
           CHANNELS_DONE=${{ secrets.CHANNELS_DONE }}
           CHANNELS_REJECTED=${{ secrets.CHANNELS_REJECTED }}
           FRONTEND_URL=http://localhost:${{ env.FRONTEND_PORT }}
-
-          # Frontend Configuration
+          
+          # Frontend
           VITE_BOT_API_URL=http://localhost:${{ env.BOT_PORT }}
+          NODE_ENV=production
           EOF
 
-      - name: Build and deploy Docker containers
+      - name: Build and deploy containers
         run: |
           echo "${{ secrets.SUDO_PASSWORD }}" | sudo -S docker compose -f docker-compose.yml up -d --build
 
-      - name: Verify containers are running
+      - name: Verify deployment
         run: |
           echo "${{ secrets.SUDO_PASSWORD }}" | sudo -S docker ps
-          echo "${{ secrets.SUDO_PASSWORD }}" | sudo -S docker compose ps
+          echo "Frontend should be available on port ${{ env.FRONTEND_PORT }}"
+          echo "Bot should be available on port ${{ env.BOT_PORT }}"

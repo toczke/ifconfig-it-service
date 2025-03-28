@@ -4,14 +4,12 @@ services:
   frontend:
     container_name: it-service-frontend
     build:
-      context: ./packages/static-frontend  # Updated path
+      context: ./packages/static-frontend  # Correct path
       dockerfile: Dockerfile
     ports:
       - "4173:4173"
     volumes:
-      - type: volume
-        source: frontend-node-modules
-        target: /app/node_modules
+      - frontend-node-modules:/app/node_modules
     environment:
       - NODE_ENV=production
     env_file:
@@ -30,12 +28,8 @@ services:
     ports:
       - "3001:3001"
     volumes:
-      - type: volume
-        source: bot-node-modules
-        target: /app/node_modules
-      - type: volume
-        source: bot-uploads
-        target: /app/uploads
+      - bot-node-modules:/app/node_modules
+      - bot-uploads:/app/uploads
     environment:
       - NODE_ENV=production
     env_file:
