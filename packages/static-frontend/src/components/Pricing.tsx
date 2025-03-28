@@ -46,6 +46,51 @@ const customPcPricing = [
   { service: 'Premium - Rozszerzona + montaż PTM7950 zamiast pasty', price: '250 zł', warranty: 'Zgodnie z częściami', parts: 'Koszt komponentów osobno' },
 ];
 
+function highlightText(text: string) {
+  const textToHighlight = 'Zamień pastę na PTM7950';
+  if (!text.includes(textToHighlight)) return text;
+
+  const parts = text.split(textToHighlight);
+  return (
+    <>
+      {parts[0]}
+      <span className={classes.highlight}>{textToHighlight}</span>
+      {parts[1]}
+    </>
+  );
+}
+
+function PriceTable({ data }: { data: any[] }) {
+  return (
+    <div className={classes.tableWrapper}>
+      <Table striped highlightOnHover mt="md">
+        <Table.Thead>
+          <Table.Tr>
+            <Table.Th>Usługa</Table.Th>
+            <Table.Th>Cena</Table.Th>
+            <Table.Th>Gwarancja</Table.Th>
+            <Table.Th>Dodatkowe</Table.Th>
+          </Table.Tr>
+        </Table.Thead>
+        <Table.Tbody>
+          {data.map((item, index) => (
+            <Table.Tr key={index}>
+              <Table.Td>{item.service}</Table.Td>
+              <Table.Td>
+                <Badge variant="light" color="blue">
+                  {item.price}
+                </Badge>
+              </Table.Td>
+              <Table.Td>{item.warranty}</Table.Td>
+              <Table.Td>{highlightText(item.parts)}</Table.Td>
+            </Table.Tr>
+          ))}
+        </Table.Tbody>
+      </Table>
+    </div>
+  );
+}
+
 export function Pricing() {
   return (
     <Container size="lg" py="xl" className={classes.wrapper} id="cennik">
@@ -101,32 +146,7 @@ export function Pricing() {
         </Tabs.List>
 
         <Tabs.Panel value="common" pt="xs">
-          <div className={classes.tableWrapper}>
-            <Table striped highlightOnHover mt="md">
-              <Table.Thead>
-                <Table.Tr>
-                  <Table.Th>Usługa</Table.Th>
-                  <Table.Th>Cena usługi</Table.Th>
-                  <Table.Th>Gwarancja</Table.Th>
-                  <Table.Th>Dodatkowe koszty</Table.Th>
-                </Table.Tr>
-              </Table.Thead>
-              <Table.Tbody>
-                {commonPricing.map((item, index) => (
-                  <Table.Tr key={index}>
-                    <Table.Td>{item.service}</Table.Td>
-                    <Table.Td>
-                      <Badge variant="light" color="blue">
-                        {item.price}
-                      </Badge>
-                    </Table.Td>
-                    <Table.Td>{item.warranty}</Table.Td>
-                    <Table.Td>{item.parts}</Table.Td>
-                  </Table.Tr>
-                ))}
-              </Table.Tbody>
-            </Table>
-          </div>
+          <PriceTable data={commonPricing} />
         </Tabs.Panel>
 
         <Tabs.Panel value="hardware" pt="xs">
@@ -147,121 +167,21 @@ export function Pricing() {
             </Tabs.List>
 
             <Tabs.Panel value="laptop" pt="xs">
-              <div className={classes.tableWrapper}>
-                <Table striped highlightOnHover mt="md">
-                  <Table.Thead>
-                    <Table.Tr>
-                      <Table.Th>Usługa</Table.Th>
-                      <Table.Th>Cena usługi</Table.Th>
-                      <Table.Th>Gwarancja</Table.Th>
-                      <Table.Th>Koszt części</Table.Th>
-                    </Table.Tr>
-                  </Table.Thead>
-                  <Table.Tbody>
-                    {laptopPricing.map((item, index) => (
-                      <Table.Tr key={index}>
-                        <Table.Td>{item.service}</Table.Td>
-                        <Table.Td>
-                          <Badge variant="light" color="blue">
-                            {item.price}
-                          </Badge>
-                        </Table.Td>
-                        <Table.Td>{item.warranty}</Table.Td>
-                        <Table.Td>{item.parts}</Table.Td>
-                      </Table.Tr>
-                    ))}
-                  </Table.Tbody>
-                </Table>
-              </div>
+              <PriceTable data={laptopPricing} />
             </Tabs.Panel>
 
             <Tabs.Panel value="desktop" pt="xs">
-              <div className={classes.tableWrapper}>
-                <Table striped highlightOnHover mt="md">
-                  <Table.Thead>
-                    <Table.Tr>
-                      <Table.Th>Usługa</Table.Th>
-                      <Table.Th>Cena usługi</Table.Th>
-                      <Table.Th>Gwarancja</Table.Th>
-                      <Table.Th>Koszt części</Table.Th>
-                    </Table.Tr>
-                  </Table.Thead>
-                  <Table.Tbody>
-                    {desktopPricing.map((item, index) => (
-                      <Table.Tr key={index}>
-                        <Table.Td>{item.service}</Table.Td>
-                        <Table.Td>
-                          <Badge variant="light" color="blue">
-                            {item.price}
-                          </Badge>
-                        </Table.Td>
-                        <Table.Td>{item.warranty}</Table.Td>
-                        <Table.Td>{item.parts}</Table.Td>
-                      </Table.Tr>
-                    ))}
-                  </Table.Tbody>
-                </Table>
-              </div>
+              <PriceTable data={desktopPricing} />
             </Tabs.Panel>
           </Tabs>
         </Tabs.Panel>
 
         <Tabs.Panel value="software" pt="xs">
-          <div className={classes.tableWrapper}>
-            <Table striped highlightOnHover mt="md">
-              <Table.Thead>
-                <Table.Tr>
-                  <Table.Th>Usługa</Table.Th>
-                  <Table.Th>Cena usługi</Table.Th>
-                  <Table.Th>Gwarancja</Table.Th>
-                  <Table.Th>Uwagi</Table.Th>
-                </Table.Tr>
-              </Table.Thead>
-              <Table.Tbody>
-                {softwarePricing.map((item, index) => (
-                  <Table.Tr key={index}>
-                    <Table.Td>{item.service}</Table.Td>
-                    <Table.Td>
-                      <Badge variant="light" color="blue">
-                        {item.price}
-                      </Badge>
-                    </Table.Td>
-                    <Table.Td>{item.warranty}</Table.Td>
-                    <Table.Td>{item.parts}</Table.Td>
-                  </Table.Tr>
-                ))}
-              </Table.Tbody>
-            </Table>
-          </div>
+          <PriceTable data={softwarePricing} />
         </Tabs.Panel>
 
         <Tabs.Panel value="custompc" pt="xs">
-          <div className={classes.tableWrapper}>
-            <Table striped highlightOnHover mt="md">
-              <Table.Thead>
-                <Table.Tr>
-                  <Table.Th>Rodzaj usługi</Table.Th>
-                  <Table.Th>Cena usługi</Table.Th>
-                  <Table.Th>Gwarancja</Table.Th>
-                  <Table.Th>Komponenty</Table.Th>
-                </Table.Tr>
-              </Table.Thead>
-              <Table.Tbody>
-                {customPcPricing.map((item, index) => (
-                  <Table.Tr key={index}>
-                    <Table.Td>{item.service}</Table.Td>
-                    <Table.Td>
-                      <Badge variant="light" color="blue">
-                        {item.price}
-                      </Badge>
-                    </Table.Td>
-                    <Table.Td>{item.warranty}</Table.Td>
-                    <Table.Td>{item.parts}</Table.Td>
-                  </Table.Tr>
-                ))}
-              </Table.Tbody>
-            </Table>
-          </div>
+          <PriceTable data={customPcPricing} />
         </Tabs.Panel>
       </Tabs>
 

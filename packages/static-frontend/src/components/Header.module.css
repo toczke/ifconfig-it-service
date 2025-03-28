@@ -24,7 +24,7 @@
   align-items: center;
   gap: 8px;
   padding: 8px 16px;
-  margin: 0 4px;
+  margin: 0 2px;
   border-radius: var(--mantine-radius-md);
   color: var(--mantine-color-gray-7);
   text-decoration: none;
@@ -36,7 +36,7 @@
   cursor: pointer;
   height: 40px;
   font-size: var(--mantine-font-size-sm);
-  min-width: 120px;
+  min-width: auto;
   justify-content: center;
   font-weight: 500;
 }
@@ -68,11 +68,11 @@
 .ctaButton {
   height: 40px !important;
   padding: 8px 24px !important;
-  margin: 0 4px !important;
+  margin: 0 2px !important;
   border-radius: var(--mantine-radius-md) !important;
   font-weight: 500 !important;
   transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
-  min-width: 120px !important;
+  min-width: auto !important;
 }
 
 .ctaButton:hover {
@@ -90,7 +90,7 @@
   width: 40px !important;
   border-radius: var(--mantine-radius-md) !important;
   transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
-  margin: 0 4px !important;
+  margin: 0 2px !important;
 }
 
 .themeToggle:hover {
@@ -101,6 +101,23 @@
 .themeToggle:active {
   transform: translateY(0) !important;
   box-shadow: none !important;
+}
+
+.logoContainer {
+  margin-right: var(--mantine-spacing-md);
+}
+
+/* Mobile styles */
+@media (max-width: 768px) {
+  .link {
+    padding: 6px 12px;
+    font-size: var(--mantine-font-size-xs);
+  }
+
+  .ctaButton {
+    padding: 6px 16px !important;
+    font-size: var(--mantine-font-size-xs) !important;
+  }
 }
 
 .linkText {
