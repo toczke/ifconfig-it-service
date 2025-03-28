@@ -3,6 +3,7 @@ import styles from './IfconfigLogo.module.css';
 import { useMantineColorScheme } from '@mantine/core';
 
 type ThemeOption = 'light' | 'dark' | 'auto';
+type ColorScheme = 'light' | 'dark';
 
 interface IfconfigLogoProps {
   width?: number | string;
@@ -30,24 +31,21 @@ const IfconfigLogo: React.FC<IfconfigLogoProps> = ({
   
   const effectiveTheme = theme === 'auto' ? colorScheme : theme;
 
-  const defaultColors = {
+  const defaultColors: Record<ColorScheme, { primary: string; secondary: string; chevron: string }> = {
     light: {
       primary: 'var(--logo-primary)',
       secondary: 'var(--logo-secondary)',
       chevron: 'var(--logo-chevron)',
     },
     dark: {
-      primary: 'var(--logo-primary-dark)',
-      secondary: 'var(--logo-secondary-dark)',
+      primary: 'var(--logo-primary)',
+      secondary: 'var(--logo-secondary)',
       chevron: 'var(--logo-chevron)',
     },
   };
 
-  const primaryColor = propPrimaryColor || 
-    (effectiveTheme === 'dark' ? defaultColors.light.primary : defaultColors.dark.secondary);
-  
-  const chevronColor = propChevronColor || 
-    (effectiveTheme === 'dark' ? defaultColors.light.primary : defaultColors.light.primary);
+  const primaryColor = propPrimaryColor || defaultColors[effectiveTheme as ColorScheme].primary;
+  const chevronColor = propChevronColor || 'var(--logo-chevron)';
 
   const gradientId = `ifconfig-gradient-${Math.random().toString(36).substr(2, 9)}`;
 

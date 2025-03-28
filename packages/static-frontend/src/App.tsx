@@ -1,4 +1,4 @@
-import { MantineProvider } from '@mantine/core';
+import { MantineProvider, ColorSchemeScript } from '@mantine/core';
 import { AppShell } from '@mantine/core';
 import { Header } from './components/Header';
 import { Footer } from './components/Footer';
@@ -14,10 +14,36 @@ import { Faq } from './components/Faq';
 import { ScrollToTop } from './components/ScrollToTop';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { RequestStatus } from './components/RequestStatus';
+import { useEffect, useState } from 'react';
 
 function App() {
+  const [colorScheme, setColorScheme] = useState<'light' | 'dark'>('light');
+
+  useEffect(() => {
+    // Check if user has a saved preference
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme) {
+      setColorScheme(savedTheme as 'light' | 'dark');
+      return;
+    }
+
+    // Check system preference
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    setColorScheme(prefersDark ? 'dark' : 'light');
+
+    // Listen for system theme changes
+    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+    const handleChange = (e: MediaQueryListEvent) => {
+      setColorScheme(e.matches ? 'dark' : 'light');
+    };
+
+    mediaQuery.addEventListener('change', handleChange);
+    return () => mediaQuery.removeEventListener('change', handleChange);
+  }, []);
+
   return (
-    <MantineProvider>
+    <MantineProvider defaultColorScheme={colorScheme}>
+      <ColorSchemeScript defaultColorScheme={colorScheme} />
       <Router>
         <AppShell
           header={{ height: 60 }}

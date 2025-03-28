@@ -1,18 +1,85 @@
 .wrapper {
-    padding: var(--mantine-spacing-xl) 0;
+  padding: var(--mantine-spacing-xl) 0;
+}
+
+.header {
+  margin-bottom: var(--mantine-spacing-xl);
+  text-align: center;
+}
+
+.title {
+  font-size: var(--mantine-font-size-xl);
+  font-weight: 900;
+  margin-bottom: var(--mantine-spacing-md);
+  
+  @media (max-width: 768px) {
+    font-size: var(--mantine-font-size-lg);
+  }
+}
+
+.description {
+  color: var(--mantine-color-dimmed);
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.timelineWrapper {
+  max-width: 1000px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+/* Timeline Styles API classes */
+.root {
+  --tl-line-width: 2px;
+  --tl-line-style: dashed;
+}
+
+.item {
+  padding-top: var(--mantine-spacing-xl);
+  align-items: flex-start;
+}
+
+.itemBody {
+  padding-left: var(--mantine-spacing-md);
+}
+
+.itemTitle {
+  margin-bottom: var(--mantine-spacing-xs);
+  font-weight: 600;
+}
+
+.itemContent {
+  padding-bottom: var(--mantine-spacing-xl);
+}
+
+.itemBullet {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid var(--mantine-color-blue-6);
+}
+
+.itemBullet[data-active] {
+  background-color: var(--mantine-color-blue-6);
+}
+
+.timelineText {
+  color: var(--mantine-color-dimmed);
+  font-size: var(--mantine-font-size-sm);
+  line-height: 1.6;
+}
+
+@media (max-width: 768px) {
+  .timelineWrapper {
+    padding: 0 var(--mantine-spacing-md);
   }
   
-  .title {
-    font-size: var(--mantine-font-size-xl);
-    font-weight: 900;
-    margin-bottom: var(--mantine-spacing-xl);
-    
-    @media (max-width: $mantine-breakpoint-sm) {
-      font-size: var(--mantine-font-size-lg);
-    }
+  .item {
+    padding-top: var(--mantine-spacing-lg);
   }
   
-  .timeline {
-    max-width: rem(800px);
-    margin: 0 auto;
+  .itemContent {
+    padding-bottom: var(--mantine-spacing-lg);
   }
+}

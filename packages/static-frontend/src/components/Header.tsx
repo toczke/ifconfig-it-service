@@ -67,6 +67,8 @@ export function Header() {
   ));
 
   const handleThemeToggle = () => {
+    const newColorScheme = colorScheme === 'dark' ? 'light' : 'dark';
+    localStorage.setItem('theme', newColorScheme);
     toggleColorScheme();
   };
 
