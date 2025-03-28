@@ -3,6 +3,8 @@
   position: sticky;
   top: 0;
   z-index: 100;
+  padding: 0;
+  height: 72px;
 }
 
 [data-mantine-color-scheme='dark'] .header {
@@ -14,14 +16,15 @@
   justify-content: space-between;
   align-items: center;
   height: 100%;
+  padding: 0 var(--mantine-spacing-md);
 }
 
 .link {
   display: flex;
   align-items: center;
-  gap: 12px;
-  padding: 12px 32px;
-  margin: 0 6px;
+  gap: 8px;
+  padding: 8px 16px;
+  margin: 0 4px;
   border-radius: var(--mantine-radius-md);
   color: var(--mantine-color-gray-7);
   text-decoration: none;
@@ -31,9 +34,9 @@
   text-overflow: ellipsis;
   background: transparent;
   cursor: pointer;
-  height: 48px;
+  height: 40px;
   font-size: var(--mantine-font-size-sm);
-  min-width: 140px;
+  min-width: 120px;
   justify-content: center;
   font-weight: 500;
 }
@@ -63,13 +66,13 @@
 }
 
 .ctaButton {
-  height: 48px !important;
-  padding: 12px 32px !important;
-  margin: 0 6px !important;
+  height: 40px !important;
+  padding: 8px 24px !important;
+  margin: 0 4px !important;
   border-radius: var(--mantine-radius-md) !important;
   font-weight: 500 !important;
   transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
-  min-width: 140px !important;
+  min-width: 120px !important;
 }
 
 .ctaButton:hover {
@@ -83,10 +86,11 @@
 }
 
 .themeToggle {
-  height: 48px !important;
-  width: 48px !important;
+  height: 40px !important;
+  width: 40px !important;
   border-radius: var(--mantine-radius-md) !important;
   transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  margin: 0 4px !important;
 }
 
 .themeToggle:hover {
@@ -140,18 +144,27 @@
 }
 
 .burger {
-  width: 32px;
-  height: 32px;
+  width: 40px;
+  height: 40px;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: background-color 0.2s ease;
+  transition: all 0.2s ease;
+  border-radius: var(--mantine-radius-md);
+  color: var(--mantine-color-gray-6);
+  background: transparent;
 }
 
 .burger:hover {
   background-color: var(--mantine-color-dark-6);
+  color: var(--mantine-color-gray-3);
+}
+
+[data-mantine-color-scheme='light'] .burger {
+  color: var(--mantine-color-gray-7);
 }
 
 [data-mantine-color-scheme='light'] .burger:hover {
   background-color: var(--mantine-color-gray-1);
+  color: var(--mantine-color-gray-8);
 }

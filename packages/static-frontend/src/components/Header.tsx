@@ -72,7 +72,7 @@ export function Header() {
 
   return (
     <AppShell.Header className={classes.header} withBorder={false}>
-      <Container size="100%" className={classes.inner}>
+      <Container size="lg" className={classes.inner}>
         <Group justify="space-between" h="100%" w="100%">
           <Box
             component="a"
