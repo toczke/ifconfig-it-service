@@ -6,14 +6,19 @@
     "packages/*"
   ],
   "scripts": {
-    "dev": "docker-compose up",
-    "build": "docker-compose build",
-    "start": "docker-compose up -d",
-    "stop": "docker-compose down",
+    "dev": "lerna run dev --parallel",
+    "build": "lerna run build",
+    "start": "lerna run start",
+    "stop": "lerna run stop",
+    "clean": "lerna clean",
+    "install:all": "npm install",
+    "test": "lerna run test",
+    "lint": "lerna run lint",
     "frontend:dev": "cd packages/frontend && npm run dev",
     "bot:dev": "cd packages/bot && npm run dev"
   },
   "devDependencies": {
-    "typescript": "^5.0.0"
+    "typescript": "^5.0.0",
+    "lerna": "^8.2.1"
   }
-} 
+}

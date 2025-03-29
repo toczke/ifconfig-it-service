@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import { Container, Title, Text, TextInput, Textarea, Button, Group, Select, Notification, Grid, Paper, Alert } from '@mantine/core';
-import { IconUser, IconAt, IconPhone, IconX } from '@tabler/icons-react';
+import { Container, Title, Text, TextInput, Textarea, Button, Group, Select, Grid, Paper, Alert, rem } from '@mantine/core';
+import { IconUser, IconAt, IconPhone, IconCheck, IconAlertCircle } from '@tabler/icons-react';
 import { useForm } from '@mantine/form';
 import classes from './Contact.module.css';
 
@@ -145,6 +145,70 @@ export function Contact() {
 
         <Grid.Col span={{ base: 12, md: 6 }} order={{ base: 1, md: 2 }}>
           <Paper shadow="sm" p="md" radius="md" withBorder>
+            {showSuccess && (
+              <Alert
+                mb="lg"
+                radius="md"
+                color="teal"
+                title={<Text fw={600} size="lg" c="white">Wiadomość wysłana!</Text>}
+                icon={<IconCheck size={rem(24)} stroke={2.5} />}
+                withCloseButton
+                onClose={() => setShowSuccess(false)}
+                className={classes.alertSuccess}
+                styles={{
+                  root: {
+                    backgroundImage: 'linear-gradient(45deg, var(--mantine-color-teal-7), var(--mantine-color-cyan-7))',
+                    border: '1px solid var(--mantine-color-teal-3)'
+                  },
+                  closeButton: {
+                    color: 'var(--mantine-color-white)',
+                    '&:hover': {
+                      background: 'rgba(255, 255, 255, 0.2)'
+                    }
+                  }
+                }}
+              >
+                <Text size="sm" fw={500} c="white">
+                  Dziękujemy za kontakt! Odpowiemy najszybciej jak to możliwe.
+                </Text>
+                <Text size="xs" c="white" mt={6} opacity={0.9}>
+                  Zazwyczaj odpowiadamy w ciągu 24 godzin.
+                </Text>
+              </Alert>
+            )}
+
+            {showError && (
+              <Alert
+                mb="lg"
+                radius="md"
+                color="red"
+                title={<Text fw={600} size="lg" c="white">Wystąpił błąd</Text>}
+                icon={<IconAlertCircle size={rem(24)} stroke={2.5} />}
+                withCloseButton
+                onClose={() => setShowError(false)}
+                className={classes.alertError}
+                styles={{
+                  root: {
+                    backgroundImage: 'linear-gradient(45deg, var(--mantine-color-red-7), var(--mantine-color-pink-7))',
+                    border: '1px solid var(--mantine-color-red-3)'
+                  },
+                  closeButton: {
+                    color: 'var(--mantine-color-white)',
+                    '&:hover': {
+                      background: 'rgba(255, 255, 255, 0.2)'
+                    }
+                  }
+                }}
+              >
+                <Text size="sm" fw={500} c="white">
+                  Przepraszamy, nie udało się wysłać wiadomości.
+                </Text>
+                <Text size="xs" c="white" mt={6} opacity={0.9}>
+                  Spróbuj ponownie lub skontaktuj się z nami telefonicznie.
+                </Text>
+              </Alert>
+            )}
+
             <form onSubmit={handleSubmit}>
               <TextInput
                 label="Imię"
@@ -211,29 +275,6 @@ export function Contact() {
                 </Button>
               </Group>
             </form>
-
-            {showSuccess && (
-              <Alert
-                title="Sukces!"
-                color="green"
-                variant="filled"
-                onClose={() => setShowSuccess(false)}
-              >
-                <Text>Twoja wiadomość została wysłana pomyślnie.</Text>
-              </Alert>
-            )}
-
-            {showError && (
-              <Notification
-                icon={<IconX size={20} />}
-                color="red"
-                title="Błąd!"
-                mt="md"
-                onClose={() => setShowError(false)}
-              >
-                Wystąpił błąd podczas wysyłania wiadomości. Spróbuj ponownie później.
-              </Notification>
-            )}
 
             <Group justify="center" mt="md">
               <Button 

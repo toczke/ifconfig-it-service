@@ -1,6 +1,6 @@
 import { Container, Text, Stack, Group } from '@mantine/core';
 import { IconTools, IconBrain, IconShield } from '@tabler/icons-react';
-import IfconfigLogo from './IfconfigLogo';
+import IfconfigLogo from '../../ui/IfconfigLogo/IfconfigLogo';
 import classes from './Banner.module.css';
 
 export function Banner() {

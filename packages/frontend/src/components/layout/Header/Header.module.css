@@ -1,0 +1,152 @@
+.header {
+  background-color: var(--mantine-color-body);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  height: 72px;
+}
+
+.inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 100%;
+  padding: 0 var(--mantine-spacing-md);
+  max-width: 1400px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.logoContainer {
+  display: flex;
+  align-items: center;
+  margin-right: var(--mantine-spacing-md);
+  flex-shrink: 0;
+}
+
+.logo {
+  height: 32px;
+  width: auto;
+}
+
+.mainNav {
+  flex: 1;
+  justify-content: center;
+  gap: var(--mantine-spacing-sm);
+  flex-wrap: nowrap;
+  display: flex;
+  align-items: center;
+  min-width: 0;
+  margin: 0 auto;
+  padding: 0 var(--mantine-spacing-xl);
+}
+
+.buttons {
+  gap: var(--mantine-spacing-sm);
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+}
+
+.link {
+  display: flex;
+  align-items: center;
+  gap: var(--mantine-spacing-xs);
+  text-decoration: none;
+  color: var(--mantine-color-text);
+  font-weight: 500;
+  padding: 16px 24px;
+  border-radius: var(--mantine-radius-default);
+  transition: all 0.2s ease;
+  position: relative;
+  font-size: var(--mantine-font-size-sm);
+  margin: 0;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.link::before {
+  content: '';
+  position: absolute;
+  inset: -8px;
+  border-radius: var(--mantine-radius-default);
+  background-color: var(--mantine-color-blue-1);
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  z-index: -1;
+}
+
+.link:hover::before {
+  opacity: 1;
+}
+
+.link:hover {
+  color: var(--mantine-color-blue-7);
+  transform: translateY(-1px);
+}
+
+.link:active {
+  transform: translateY(0);
+}
+
+[data-mantine-color-scheme='dark'] .link {
+  color: var(--mantine-color-gray-3);
+}
+
+[data-mantine-color-scheme='dark'] .link::before {
+  background-color: var(--mantine-color-dark-5);
+}
+
+[data-mantine-color-scheme='dark'] .link:hover {
+  color: var(--mantine-color-blue-4);
+}
+
+.ctaButton {
+  height: 36px;
+  flex-shrink: 0;
+}
+
+.statusButton {
+  height: 36px;
+  flex-shrink: 0;
+}
+
+.burger {
+  margin-right: var(--mantine-spacing-md);
+}
+
+.mobileLink {
+  font-size: var(--mantine-font-size-md);
+}
+
+.mobileCtaButton {
+  margin-top: var(--mantine-spacing-md);
+}
+
+.mobileThemeButton {
+  margin-top: var(--mantine-spacing-md);
+}
+
+@media (max-width: 768px) {
+  .header {
+    height: 64px;
+  }
+
+  .inner {
+    padding: 0 var(--mantine-spacing-xs);
+    gap: var(--mantine-spacing-xs);
+  }
+
+  .logo {
+    height: 24px;
+  }
+
+  .burger {
+    margin-right: var(--mantine-spacing-xs);
+  }
+
+  .buttons {
+    position: static;
+    margin-left: var(--mantine-spacing-sm);
+  }
+}

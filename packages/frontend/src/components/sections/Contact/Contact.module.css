@@ -55,3 +55,48 @@
     min-height: 350px;
   }
 }
+
+.alertSuccess,
+.alertError {
+  animation: slideDown 0.3s ease-out;
+  box-shadow: var(--mantine-shadow-md);
+  position: relative;
+  overflow: hidden;
+}
+
+.alertSuccess::before,
+.alertError::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    45deg,
+    rgba(255, 255, 255, 0.1),
+    rgba(255, 255, 255, 0.2)
+  );
+  transform: translateX(-100%);
+  animation: shimmer 2s infinite;
+}
+
+@keyframes slideDown {
+  0% {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
