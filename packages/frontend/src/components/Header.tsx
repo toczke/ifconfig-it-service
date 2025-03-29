@@ -3,7 +3,7 @@ import { Burger, Container, Group, AppShell, Tooltip, Button, ActionIcon, useMan
 import { useDisclosure } from '@mantine/hooks';
 import { IconTools, IconMail, IconSun, IconMoon, IconQuestionMark, IconDeviceDesktop, IconSearch, IconCurrencyZloty } from '@tabler/icons-react';
 import { useNavigate } from 'react-router-dom';
-import IfconfigLogo from './IfconfigLogo';
+import IfconfigLogo from './ui/IfconfigLogo/IfconfigLogo';
 import classes from './Header.module.css';
 
 const services = [

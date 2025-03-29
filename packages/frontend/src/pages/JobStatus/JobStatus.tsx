@@ -2,7 +2,6 @@ import {
   Container, 
   Title, 
   Text, 
-  Paper, 
   Group, 
   Button, 
   Stack, 

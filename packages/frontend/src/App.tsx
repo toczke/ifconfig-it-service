@@ -1,26 +1,26 @@
 import { MantineProvider, ColorSchemeScript } from '@mantine/core';
 import { AppShell } from '@mantine/core';
-import { Header } from './components/Header';
-import { Footer } from './components/Footer';
-import { Banner } from './components/Banner';
-import { Hardware } from './components/Hardware';
-import { RepairTimeline } from './components/RepairTimeline';
-import { CustomPC } from './components/CustomPC';
-import { Pricing } from './components/Pricing';
-import { SampleProjects } from './components/SampleProjects';
-import { CustomerReviews } from './components/CustomerReviews';
-import { Contact } from './components/Contact';
-import { Faq } from './components/Faq';
-import { ScrollToTop } from './components/ScrollToTop';
-import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
-import { NotFound } from './pages/NotFound';
-import { JobStatus } from './pages/JobStatus';
+import { Header } from './components/layout/Header/Header';
+import { Footer } from './components/layout/Footer/Footer';
+import { Banner } from './components/sections/Banner/Banner';
+import { Hardware } from './components/sections/Hardware/Hardware';
+import { RepairTimeline } from './components/sections/RepairTimeline/RepairTimeline';
+import { CustomPC } from './components/sections/CustomPC/CustomPC';
+import { Pricing } from './components/sections/Pricing/Pricing';
+import { SampleProjects } from './components/sections/SampleProjects/SampleProjects';
+import { CustomerReviews } from './components/sections/CustomerReviews/CustomerReviews';
+import { Contact } from './components/sections/Contact/Contact';
+import { Faq } from './components/sections/Faq/Faq';
+import { ScrollToTop } from './components/layout/ScrollToTop/ScrollToTop';
+import { BrowserRouter as Router, Routes, Route, useLocation, Navigate } from 'react-router-dom';
+import { NotFound } from './pages/NotFound/NotFound';
+import { JobStatus } from './pages/JobStatus/JobStatus';
 import { useEffect, useState } from 'react';
 
 function AppContent() {
   const [colorScheme, setColorScheme] = useState<'light' | 'dark'>('light');
   const location = useLocation();
-  const hideHeaderFooter = location.pathname !== '/' && (location.pathname.startsWith('/job/') || location.pathname === '/404');
+  const hideHeaderFooter = location.pathname !== '/' && (location.pathname.startsWith('/job/') || location.pathname === '/404' || location.pathname === '/not-found' || location.pathname === '/404.html');
 
   useEffect(() => {
     // Check if user has a saved preference
@@ -84,7 +84,10 @@ function AppContent() {
               </>
             } />
             <Route path="/job/:uniqueid" element={<JobStatus />} />
-            <Route path="*" element={<NotFound />} />
+            <Route path="/404" element={<NotFound />} />
+            <Route path="/not-found" element={<NotFound />} />
+            <Route path="/404.html" element={<NotFound />} />
+            <Route path="*" element={<Navigate to="/404" replace />} />
           </Routes>
         </AppShell.Main>
         

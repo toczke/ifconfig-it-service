@@ -2,9 +2,9 @@ version: '3.8'
 
 services:
   frontend:
-    container_name: it-service-frontend
+    container_name: ifconfig-frontend
     build:
-      context: ./packages/static-frontend
+      context: ./packages/frontend
       dockerfile: Dockerfile
     ports:
       - "3000:3000"
@@ -15,7 +15,7 @@ services:
     restart: unless-stopped
 
   bot:
-    container_name: it-service-bot
+    container_name: ifconfig-bot
     build:
       context: ./packages/discord-bot
       dockerfile: Dockerfile

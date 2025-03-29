@@ -1,120 +1,113 @@
-# IT Service Management System
+# IT Service Management Frontend
 
-A monorepo containing a Discord bot and React frontend for managing IT service requests.
+A modern, responsive web application for managing IT services, built with React, TypeScript, and Mantine UI.
+
+## Features
+
+- 🖥️ **Service Management**
+  - Computer repair tracking
+  - Custom PC building service
+  - Pricing information
+  - FAQ section
+
+- 📱 **Job Status Tracking**
+  - Real-time status updates
+  - Detailed timeline view
+  - Cost breakdown
+  - Service reports and receipts
+
+- 📬 **Contact System**
+  - Contact form with validation
+  - Discord webhook integration
+  - Emergency contact options
+  - Location map integration
+
+- 🌓 **User Experience**
+  - Dark/Light theme support
+  - Responsive design
+  - Mobile-friendly interface
+  - Smooth scrolling navigation
+
+## Tech Stack
+
+- **Framework**: React with TypeScript
+- **UI Library**: Mantine
+- **Routing**: React Router
+- **Icons**: Tabler Icons
+- **Build Tool**: Vite
+- **Package Manager**: npm/yarn (workspace)
+
+## Getting Started
+
+### Prerequisites
+
+- Node.js (v16 or higher)
+- npm or yarn
+
+### Installation
+
+1. Clone the repository:
+```bash
+git clone https://github.com/yourusername/it-service-frontend.git
+cd it-service-frontend
+```
+
+2. Install dependencies:
+```bash
+npm install
+# or
+yarn install
+```
+
+3. Create a `.env` file in the root directory and add your environment variables:
+```env
+VITE_DISCORD_WEBHOOK_URL=your_discord_webhook_url
+```
+
+4. Start the development server:
+```bash
+npm run dev
+# or
+yarn dev
+```
+
+### Building for Production
+
+```bash
+npm run build
+# or
+yarn build
+```
 
 ## Project Structure
 
 ```
-it-service-monorepo/
-├── packages/
-│   ├── frontend/     # React frontend application
-│   └── bot/          # Discord bot service
-├── docker-compose.yml
-├── package.json
-└── .env.example
+packages/
+  └── frontend/
+      ├── src/
+      │   ├── components/
+      │   │   ├── sections/
+      │   │   └── ui/
+      │   ├── pages/
+      │   └── App.tsx
+      ├── public/
+      └── package.json
 ```
-
-## Prerequisites
-
-- Node.js 20.x or higher
-- Docker and Docker Compose
-- Discord Bot Token
-- Discord Server with configured channels
-
-## Setup
-
-1. Clone the repository:
-```bash
-git clone https://github.com/yourusername/it-service-monorepo.git
-cd it-service-monorepo
-```
-
-2. Copy the environment variables file:
-```bash
-cp .env.example .env
-```
-
-3. Configure your environment variables in `.env`:
-```env
-# Discord Bot Configuration
-DISCORD_TOKEN=your_discord_bot_token
-CHANNELS_NEW_REQUESTS=your_new_requests_channel_id
-CHANNELS_IN_PROGRESS=your_in_progress_channel_id
-CHANNELS_DONE=your_done_channel_id
-CHANNELS_REJECTED=your_rejected_channel_id
-FRONTEND_URL=http://localhost:4173
-
-# Frontend Configuration
-VITE_BOT_API_URL=http://localhost:3001
-```
-
-## Development
-
-### Using Docker (Recommended)
-
-1. Start all services:
-```bash
-npm run dev
-```
-
-2. Stop all services:
-```bash
-npm run stop
-```
-
-### Local Development
-
-1. Install dependencies:
-```bash
-npm install
-```
-
-2. Start frontend development server:
-```bash
-npm run frontend:dev
-```
-
-3. Start bot development server:
-```bash
-npm run bot:dev
-```
-
-## Features
-
-### Discord Bot
-- Handles IT service requests through Discord
-- Manages request status (New, In Progress, Done, Rejected)
-- Supports file attachments
-- Creates threads for ongoing support
-- Adds service notes to requests
-
-### Frontend
-- Modern React application with TypeScript
-- Contact form for service requests
-- File upload support
-- Real-time status updates
-- Responsive design
 
 ## Contributing
 
-1. Create a new branch for your feature:
-```bash
-git checkout -b feature/your-feature-name
-```
-
-2. Make your changes and commit them:
-```bash
-git add .
-git commit -m "feat: your feature description"
-```
-
-3. Push to your branch:
-```bash
-git push origin feature/your-feature-name
-```
-
-4. Create a Pull Request
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
 
 ## License
 
-This project is licensed under the MIT License - see the LICENSE file for details. 
+This project is licensed under the MIT License - see the LICENSE file for details.
+
+## Contact
+
+Your Name - [@yourtwitter](https://twitter.com/yourtwitter) - email@example.com
+
+Project Link: [https://github.com/yourusername/it-service-frontend](https://github.com/yourusername/it-service-frontend) 
