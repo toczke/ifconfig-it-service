@@ -12,12 +12,15 @@ import { CustomerReviews } from './components/CustomerReviews';
 import { Contact } from './components/Contact';
 import { Faq } from './components/Faq';
 import { ScrollToTop } from './components/ScrollToTop';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { RequestStatus } from './components/RequestStatus';
+import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
+import { NotFound } from './pages/NotFound';
+import { JobStatus } from './pages/JobStatus';
 import { useEffect, useState } from 'react';
 
-function App() {
+function AppContent() {
   const [colorScheme, setColorScheme] = useState<'light' | 'dark'>('light');
+  const location = useLocation();
+  const hideHeaderFooter = location.pathname !== '/' && (location.pathname.startsWith('/job/') || location.pathname === '/404');
 
   useEffect(() => {
     // Check if user has a saved preference
@@ -44,53 +47,64 @@ function App() {
   return (
     <MantineProvider defaultColorScheme={colorScheme}>
       <ColorSchemeScript defaultColorScheme={colorScheme} />
-      <Router>
-        <AppShell
-          header={{ height: 60 }}
-          footer={{ height: { base: 120, sm: 80 } }}
-          padding="md"
-        >
+      <AppShell
+        header={!hideHeaderFooter ? { height: 60 } : undefined}
+        footer={!hideHeaderFooter ? { height: { base: 120, sm: 80 } } : undefined}
+        padding="md"
+      >
+        {!hideHeaderFooter && (
           <AppShell.Header>
             <Header />
           </AppShell.Header>
-          
-          <AppShell.Main
-            style={{
-              width: "100%",
-              maxWidth: "100%", 
-              margin: "0", 
-              padding: "0", 
-              minHeight: "calc(100vh - 140px)",
-              paddingBottom: "100px",
-              overflowX: "hidden"
-            }}
-          >
-            <Routes>
-              <Route path="/" element={
-                <>
-                  <Banner />
-                  <Hardware />
-                  <RepairTimeline />
-                  <CustomPC />
-                  <Pricing />
-                  <SampleProjects />
-                  <CustomerReviews />
-                  <Contact />
-                  <Faq />
-                </>
-              } />
-              <Route path="/job/:requestId" element={<RequestStatus />} />
-            </Routes>
-          </AppShell.Main>
-          
+        )}
+        
+        <AppShell.Main
+          style={{
+            width: "100%",
+            maxWidth: "100%", 
+            margin: "0", 
+            padding: "0", 
+            minHeight: hideHeaderFooter ? "100vh" : "calc(100vh - 140px)",
+            paddingBottom: hideHeaderFooter ? "0" : "100px",
+            overflowX: "hidden"
+          }}
+        >
+          <Routes>
+            <Route path="/" element={
+              <>
+                <Banner />
+                <Hardware />
+                <RepairTimeline />
+                <CustomPC />
+                <Pricing />
+                <SampleProjects />
+                <CustomerReviews />
+                <Contact />
+                <Faq />
+              </>
+            } />
+            <Route path="/job/:uniqueid" element={<JobStatus />} />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </AppShell.Main>
+        
+        {!hideHeaderFooter && (
           <AppShell.Footer>
             <Footer />
           </AppShell.Footer>
-          
-          <ScrollToTop />
-        </AppShell>
-      </Router>
+        )}
+        
+        {!hideHeaderFooter && <ScrollToTop />}
+      </AppShell>
     </MantineProvider>
+  );
+}
+
+function App() {
+  return (
+    <Router>
+      <AppContent />
+    </Router>
   );
 }
 

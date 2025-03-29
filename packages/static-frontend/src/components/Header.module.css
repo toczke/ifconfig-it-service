@@ -1,57 +1,79 @@
 .header {
-  background-color: var(--mantine-color-dark-7);
+  background-color: var(--mantine-color-body);
   position: sticky;
   top: 0;
-  z-index: 100;
-  padding: 0;
+  z-index: 1000;
   height: 72px;
-}
-
-[data-mantine-color-scheme='dark'] .header {
-  border-bottom: 1px solid var(--mantine-color-dark-5);
 }
 
 .inner {
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  justify-content: space-between;
   height: 100%;
   padding: 0 var(--mantine-spacing-md);
+  max-width: 1400px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.logoContainer {
+  display: flex;
+  align-items: center;
+  margin-right: var(--mantine-spacing-md);
+  flex-shrink: 0;
+}
+
+.logo {
+  height: 32px;
+  width: auto;
+}
+
+.mainNav {
+  flex: 1;
+  justify-content: center;
+  gap: var(--mantine-spacing-sm);
+  flex-wrap: nowrap;
+  display: flex;
+  align-items: center;
+  min-width: 0;
+  margin: 0 auto;
+  padding: 0 var(--mantine-spacing-xl);
+}
+
+.buttons {
+  gap: var(--mantine-spacing-sm);
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
 }
 
 .link {
   display: flex;
   align-items: center;
-  justify-content: center;
-  gap: 8px;
-  padding: 8px 16px;
-  margin: 0 2px;
-  border-radius: var(--mantine-radius-md);
-  color: var(--mantine-color-gray-7);
+  gap: var(--mantine-spacing-xs);
   text-decoration: none;
-  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  background: transparent;
-  cursor: pointer;
-  height: 40px;
-  font-size: var(--mantine-font-size-sm);
-  min-width: 140px;
+  color: var(--mantine-color-text);
   font-weight: 500;
+  padding: 16px 24px;
+  border-radius: var(--mantine-radius-default);
+  transition: all 0.2s ease;
   position: relative;
+  font-size: var(--mantine-font-size-sm);
+  margin: 0;
+  white-space: nowrap;
+  flex-shrink: 0;
 }
 
 .link::before {
   content: '';
   position: absolute;
-  inset: 0;
-  border-radius: var(--mantine-radius-md);
+  inset: -8px;
+  border-radius: var(--mantine-radius-default);
   background-color: var(--mantine-color-blue-1);
   opacity: 0;
   transition: opacity 0.2s ease;
   z-index: -1;
-  width: 100%;
 }
 
 .link:hover::before {
@@ -60,7 +82,6 @@
 
 .link:hover {
   color: var(--mantine-color-blue-7);
-  text-decoration: none;
   transform: translateY(-1px);
 }
 
@@ -73,143 +94,59 @@
 }
 
 [data-mantine-color-scheme='dark'] .link::before {
-  background-color: var(--mantine-color-blue-9);
+  background-color: var(--mantine-color-dark-5);
 }
 
 [data-mantine-color-scheme='dark'] .link:hover {
-  color: var(--mantine-color-white);
+  color: var(--mantine-color-blue-4);
 }
 
 .ctaButton {
-  height: 40px !important;
-  padding: 8px 24px !important;
-  margin: 0 2px !important;
-  border-radius: var(--mantine-radius-md) !important;
-  font-weight: 500 !important;
-  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
-  min-width: auto !important;
+  height: 36px;
+  flex-shrink: 0;
 }
 
-.ctaButton:hover {
-  transform: translateY(-1px) !important;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1) !important;
-}
-
-.ctaButton:active {
-  transform: translateY(0) !important;
-  box-shadow: none !important;
-}
-
-.themeToggle {
-  height: 40px !important;
-  width: 40px !important;
-  border-radius: var(--mantine-radius-md) !important;
-  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
-  margin: 0 2px !important;
-}
-
-.themeToggle:hover {
-  transform: translateY(-1px) !important;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1) !important;
-}
-
-.themeToggle:active {
-  transform: translateY(0) !important;
-  box-shadow: none !important;
-}
-
-.logoContainer {
-  margin-right: var(--mantine-spacing-md);
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  transform: none !important;
-  transition: none !important;
-}
-
-.logoContainer:hover {
-  transform: none !important;
-}
-
-.logo {
-  height: 32px;
-  width: auto;
-  transform: none !important;
-  transition: none !important;
-}
-
-.logo:hover {
-  transform: none !important;
-}
-
-/* Mobile styles */
-@media (max-width: 768px) {
-  .link {
-    padding: 6px 12px;
-    font-size: var(--mantine-font-size-xs);
-  }
-
-  .ctaButton {
-    padding: 6px 16px !important;
-    font-size: var(--mantine-font-size-xs) !important;
-  }
-}
-
-.linkText {
-  @media (max-width: 900px) {
-    display: none;
-  }
-}
-
-/* Ensure button text adapts to the theme */
-.theme-button {
-  color: var(--mantine-color-dark-7);
-}
-
-[data-mantine-color-scheme='dark'] .theme-button {
-  color: var(--mantine-color-gray-0);
-}
-
-.mobileLink {
-  font-size: var(--mantine-font-size-lg);
-  height: 50px;
-}
-
-.mobileLink[data-active] {
-  background-color: var(--mantine-color-blue-7);
-  color: var(--mantine-color-white);
-}
-
-.mobileCtaButton {
-  margin-top: var(--mantine-spacing-xl);
-}
-
-.mobileThemeButton {
-  margin-top: var(--mantine-spacing-xs);
+.statusButton {
+  height: 36px;
+  flex-shrink: 0;
 }
 
 .burger {
-  width: 40px;
-  height: 40px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.2s ease;
-  border-radius: var(--mantine-radius-md);
-  color: var(--mantine-color-gray-6);
-  background: transparent;
+  margin-right: var(--mantine-spacing-md);
 }
 
-.burger:hover {
-  background-color: var(--mantine-color-dark-6);
-  color: var(--mantine-color-gray-3);
+.mobileLink {
+  font-size: var(--mantine-font-size-md);
 }
 
-[data-mantine-color-scheme='light'] .burger {
-  color: var(--mantine-color-gray-7);
+.mobileCtaButton {
+  margin-top: var(--mantine-spacing-md);
 }
 
-[data-mantine-color-scheme='light'] .burger:hover {
-  background-color: var(--mantine-color-gray-1);
-  color: var(--mantine-color-gray-8);
+.mobileThemeButton {
+  margin-top: var(--mantine-spacing-md);
+}
+
+@media (max-width: 768px) {
+  .header {
+    height: 64px;
+  }
+
+  .inner {
+    padding: 0 var(--mantine-spacing-xs);
+    gap: var(--mantine-spacing-xs);
+  }
+
+  .logo {
+    height: 24px;
+  }
+
+  .burger {
+    margin-right: var(--mantine-spacing-xs);
+  }
+
+  .buttons {
+    position: static;
+    margin-left: var(--mantine-spacing-sm);
+  }
 }
